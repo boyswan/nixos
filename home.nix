@@ -1,25 +1,49 @@
 { config, pkgs, ... }: {
+
+  imports = [
+    (import ./neovim.nix)
+  ];
   
   home = {
     username = "jack";
     homeDirectory = "/home/jack";
   };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
-
-  # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git.enable = true;
-  programs.git.userName = "boyswan";
-  programs.git.userEmail = "jackwilliamboyce@gmail.com";
+  programs.git = {
+    enable = true;
+    userName = "boyswan";
+    userEmail = "jackwilliamboyce@gmail.com";
+  };
 
-  # # Nicely reload system units when changing configs
-  # systemd.user.startServices = "sd-switch";
+  programs.alacritty = {
+    enable = true;
+  };
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  programs.lf = {
+    enable = true;
+    settings = {
+      drawbox = true;
+    };
+    extraConfig = ''
+      set cursorpreviewfmt ""
+
+      cmd mkdir %{{
+        IFS=" " 
+        mkdir -p -- "$*" 
+        lf -remote "send $id select \"$*\""
+      }}
+
+      cmd touch %{{
+        IFS=" " 
+        touch "$*"
+        lf -remote "send $id select \"$*\""
+      }}
+    '';
+  };
+
   home.stateVersion = "23.05";
-
-  home.packages = with pkgs; [ neovim btop ];
+  home.packages = with pkgs; [ 
+    btop 
+  ];
 }

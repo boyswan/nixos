@@ -1,0 +1,18 @@
+set drawbox
+set cursorpreviewfmt ""
+
+map <c-j> :updir; set dironly true; down; set dironly false; open
+map <c-k> :updir; set dironly true; up; set dironly false; open
+
+cmd mkdir %{{
+    IFS=" "
+    mkdir -p -- "$*"
+    lf -remote "send $id select \"$*\""
+}}
+
+
+cmd touch %{{
+    IFS=" "
+    touch "$*"
+    lf -remote "send $id select \"$*\""
+}}
