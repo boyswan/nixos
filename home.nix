@@ -50,6 +50,7 @@
     gammastep
     wl-clipboard
     slurp
+    gitui
   ];
 
 }

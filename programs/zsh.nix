@@ -4,7 +4,8 @@
 
     shellAliases = {
       ll = "ls -l";
-      nb = "sudo nixos-rebuild switch --flake ~/nixos/#jack";
+      gs = "git status";
+      nb = "sudo nixos-rebuild switch --flake ~/NixOS/#jack";
     };
 
     history = {
