@@ -51,7 +51,6 @@ vim.cmd[[autocmd WinEnter * setlocal cursorline]]
 vim.cmd[[autocmd WinLeave * setlocal nocursorline]]
 
 
-vim.cmd[[command! Q: q]]
-vim.cmd[[command! X: x]]
-vim.cmd[[command! W: W]]
-
+vim.cmd[[command! Q :q]]
+vim.cmd[[command! X :x]]
+vim.cmd[[command! W :w]]

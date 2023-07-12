@@ -39,6 +39,7 @@
         harpoon
         lf-vim
         onedark-nvim
+        toggleterm-nvim
         (pluginGit "lmburns" "lf.nvim" "87a72c6" "Zl9eIzNNklPAyQbS1jPavRvZ1NVmCTxw0R0so67wapM=")
       ];
     };
