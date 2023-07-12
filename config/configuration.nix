@@ -44,10 +44,11 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.autorun = false;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = false;
+  services.xserver.desktopManager.gnome.enable = false;
 
   # Configure keymap in X11
   services.xserver = {
@@ -79,14 +80,11 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+
   users.users.jack = {
     isNormalUser = true;
     description = "jack";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-    #  thunderbird
-    ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
   };
 
   # Allow unfree packages
@@ -96,12 +94,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    git
     wget
     curl
-    clang
-    zig
-    ripgrep
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -136,5 +130,12 @@
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
+
+
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+  environment.shells = with pkgs; [ zsh ];
+
+  programs.light.enable = true;
 
 }

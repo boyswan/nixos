@@ -24,24 +24,17 @@ keymap("n", "<leader>m", "<cmd>lua require'harpoon.mark'.add_file()<cr>")
 
 keymap("n", "<leader>y", "\"_dP")
 keymap("i", "jk", "<esc>")
-keymap("n", "<leader>jk", "<cmd>:VMClear<cr>")
 
 vim.cmd[[nnoremap <silent> <leader>k <cmd>lua vim.diagnostic.open_float()<CR>]]
 
-keymap("n", "<leader>l", "<cmd>:bnext<cr>")
-keymap("n", "<leader>h", "<cmd>:bprev<cr>")
 keymap("n", "<leader>q", "<cmd>:bd<cr>")
 keymap("n", "<leader>w", "<C-w>c")
 -- keymap("n", "<leader>e", "<cmd>Explore<cr><cr>")
 keymap("n", "<leader>e", ":Lf<cr>")
 keymap("n", "<leader>o", "<cmd>vsp<cr><cr>")
+keymap("n", "<C-h>", "<C-W><C-h>")
+keymap("n", "<C-l>", "<C-W><C-l>")
 
-vim.cmd[[set omnifunc=rescript#Complete]]
-vim.cmd[[set completeopt+=preview]]
-vim.cmd[[autocmd FileType rescript nnoremap <silent> <buffer> <leader>f :RescriptFormat<CR>]]
-vim.cmd[[autocmd FileType rescript nnoremap <silent> <buffer> <s-k> :RescriptTypeHint<CR>]]
-vim.cmd[[autocmd FileType rescript nnoremap <silent> <buffer> gd :RescriptJumpToDefinition<CR>]]
-vim.cmd[[autocmd FileType rescript nnoremap <silent> <buffer> <leader>b :RescriptBuild<CR>]]
 
 vim.cmd[[autocmd FileType css nnoremap <silent> <buffer> <leader>f :Prettier<CR>]]
 vim.cmd[[autocmd FileType scss nnoremap <silent> <buffer> <leader>f :Prettier<CR>]]

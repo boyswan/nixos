@@ -5,6 +5,7 @@
     (import ./programs/alacritty.nix)
     (import ./programs/lf.nix)
     (import ./programs/sway.nix)
+    (import ./programs/zsh.nix)
   ];
   
   home = {
@@ -12,6 +13,14 @@
     homeDirectory = "/home/jack";
     sessionVariables = {
       TERMINAL = "alacritty";
+    };
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.gruvbox-dark-gtk;
+      name = "gruvbox-dark";
     };
   };
 
@@ -31,5 +40,16 @@
   home.stateVersion = "23.05";
   home.packages = with pkgs; [ 
     btop 
+    google-chrome
+    firefox
+    clang 
+    dconf
+    zig
+    ripgrep
+    neofetch
+    gammastep
+    wl-clipboard
+    slurp
   ];
+
 }

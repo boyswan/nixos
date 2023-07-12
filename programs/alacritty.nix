@@ -5,12 +5,13 @@
     settings = {
 
       env = {
-        "TERM" = "xterm-256color";
+        # "TERM" = "xterm-256color";
+        "TERM" = "alacritty";
       };
       
       font = {
         size = 12;
-        family = "Iosevka Nerd Font";
+        family = "Iosevka";
       };
 
       window.padding = {
