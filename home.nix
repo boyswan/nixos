@@ -1,12 +1,18 @@
 { config, pkgs, ... }: {
 
   imports = [
-    (import ./neovim.nix)
+    (import ./programs/neovim.nix)
+    (import ./programs/alacritty.nix)
+    (import ./programs/lf.nix)
+    (import ./programs/sway.nix)
   ];
   
   home = {
     username = "jack";
     homeDirectory = "/home/jack";
+    sessionVariables = {
+      TERMINAL = "alacritty";
+    };
   };
 
   programs.home-manager.enable = true;
@@ -21,31 +27,6 @@
     };
   };
 
-  programs.alacritty = {
-    enable = true;
-  };
-
-  programs.lf = {
-    enable = true;
-    settings = {
-      drawbox = true;
-    };
-    extraConfig = ''
-      set cursorpreviewfmt ""
-
-      cmd mkdir %{{
-        IFS=" " 
-        mkdir -p -- "$*" 
-        lf -remote "send $id select \"$*\""
-      }}
-
-      cmd touch %{{
-        IFS=" " 
-        touch "$*"
-        lf -remote "send $id select \"$*\""
-      }}
-    '';
-  };
 
   home.stateVersion = "23.05";
   home.packages = with pkgs; [ 
