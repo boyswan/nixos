@@ -13,8 +13,12 @@
 
   programs.git = {
     enable = true;
+    package = pkgs.gitAndTools.gitFull;
     userName = "boyswan";
     userEmail = "jackwilliamboyce@gmail.com";
+    extraConfig = {
+      credential.helper = "libsecret";
+    };
   };
 
   programs.alacritty = {
