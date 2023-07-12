@@ -37,10 +37,11 @@ g.tpipeline_cursormoved = 1
 g.tpipline_fillcentre = 1
 g.lf_netrw = 1
 
-require('onedark').load()
 require('onedark').setup {
     style = 'warmer'
 }
+
+require('onedark').load()
 
 vim.keymap.set('n', '<PageUp>', '<Nop>')
 vim.keymap.set('n', '<PageDown>', '<Nop>')

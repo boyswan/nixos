@@ -51,6 +51,7 @@
     wl-clipboard
     slurp
     gitui
+    bat
   ];
 
 }
