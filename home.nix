@@ -26,19 +26,14 @@
 
   programs.home-manager.enable = true;
 
-  programs.gh = {
-    enable = true;
-    enableGitCredentialHelper = true;
-  };
-
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
     userName = "boyswan";
     userEmail = "jackwilliamboyce@gmail.com";
-    # extraConfig = {
-    #   credential.helper = "libsecret";
-    # };
+    extraConfig = {
+      credential.helper = "libsecret";
+    };
   };
 
 
