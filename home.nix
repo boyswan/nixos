@@ -2,9 +2,9 @@
 
   imports = [
     (import ./programs/nvim)
+    (import ./programs/sway)
     (import ./programs/alacritty.nix)
     (import ./programs/lf.nix)
-    (import ./programs/sway.nix)
     (import ./programs/zsh.nix)
     (import ./programs/waybar.nix)
   ];
