@@ -14,7 +14,7 @@
         "${mod}+c" = "focus child";
         "${mod}+Shift+p" = "exec grim -g \"$(slurp)\" -t png - | wl-copy -t image/png";
         "${mod}+Return" = "exec $term_cwd";
-        XF86AudioRaiseVolume = "exec amixer sset Master playback -5%+";
+        XF86AudioRaiseVolume = "exec amixer sset Master playback 5%+";
         XF86AudioLowerVolume = "exec amixer sset Master playback 5%-";
         XF86AudioMute = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
         XF86MonBrightnessDown = "exec brightnessctl set 5%-";
