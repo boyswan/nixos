@@ -26,6 +26,11 @@
 
   programs.home-manager.enable = true;
 
+  programs.gh = {
+    enable = true;
+    enableGitCredentialHelper = true;
+  };
+
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
