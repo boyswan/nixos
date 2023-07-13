@@ -36,9 +36,9 @@
     package = pkgs.gitAndTools.gitFull;
     userName = "boyswan";
     userEmail = "jackwilliamboyce@gmail.com";
-    extraConfig = {
-      credential.helper = "libsecret";
-    };
+    # extraConfig = {
+    #   credential.helper = "libsecret";
+    # };
   };
 
 
