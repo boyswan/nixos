@@ -31,15 +31,8 @@
     package = pkgs.gitAndTools.gitFull;
     userName = "boyswan";
     userEmail = "jackwilliamboyce@gmail.com";
-    # extraConfig = {
-    #   credential.helper = "libsecret";
-    # };
-
-
     extraConfig = {
-      credential.helper = "${
-          pkgs.git.override { withLibsecret = true; }
-        }/bin/git-credential-libsecret";
+      credential.helper = "libsecret";
     };
   };
 
