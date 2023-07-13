@@ -3,6 +3,10 @@
   wayland.windowManager.sway = 
     let 
     mod = "Mod1";
+    fontConf = {
+      names = [ "Iosevka" ];
+      size = 10.0;
+    };
   in {
     enable = true;
     wrapperFeatures.gtk = false;
@@ -21,23 +25,9 @@
         XF86MonBrightnessUp = "exec brightnessctl set 5%+";
       };
 
-      # fonts = [ "Iosevka" ];
-      # font_size = 10;
-
-      gaps = {
-        inner = 5;
-      };
-
-      bars = [
-      {
-        position = "top";
-        colors = {
-          statusline = "#ffffff";
-          background = "#101010";
-        };
-      }
-      ];
-
+      fonts = fontConf;
+      gaps.inner = 5;
+      bars = [];
       input = {
         "type:keyboard" = {
           repeat_delay = "200";
@@ -56,18 +46,14 @@
 
     extraConfig = ''
       set $term_cwd alacritty --working-directory="$(${./dotfiles/sway/swaycwd})"
-
-
       client.focused "#383838" "#383838" "#61afef" "#383838" "#61afef75"
       client.focused_inactive "#383838" "#383838" "#c678dd" "#383838" "#61afef75"
       default_border pixel 2
       exec gammastep -O 4000
+      exec waybar
       '';
   };
 
-# programs.waybar ={
-#   enable = true;
-# };
 
-                            }
+}
 

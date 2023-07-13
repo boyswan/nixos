@@ -1,11 +1,12 @@
 { config, pkgs, ... }: {
 
   imports = [
-    (import ./programs/neovim.nix)
+    (import ./programs/nvim)
     (import ./programs/alacritty.nix)
     (import ./programs/lf.nix)
     (import ./programs/sway.nix)
     (import ./programs/zsh.nix)
+    (import ./programs/waybar.nix)
   ];
   
   home = {
