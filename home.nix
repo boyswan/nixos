@@ -58,6 +58,7 @@
     slurp
     gitui
     bat
+    jq
   ];
 
 }

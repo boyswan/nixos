@@ -13,7 +13,7 @@
         keybindings = lib.mkOptionDefault {
           "${mod}+c" = "focus child";
           "${mod}+Shift+p" = "exec grim -g \"$(slurp)\" -t png - | wl-copy -t image/png";
-          "${mod}+Return" = "exec $term_cwd";
+          "${mod}+Return" = "exec alacritty --working-directory=\"$(${./swaycwd})\"";
           XF86AudioRaiseVolume = "exec amixer sset Master playback 5%+";
           XF86AudioLowerVolume = "exec amixer sset Master playback 5%-";
           XF86AudioMute = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
@@ -45,7 +45,6 @@
       };
 
       extraConfig = ''
-        set $term_cwd alacritty --working-directory="$(${./swaycwd})"
         client.focused "#383838" "#383838" "#61afef" "#383838" "#61afef75"
         client.focused_inactive "#383838" "#383838" "#c678dd" "#383838" "#61afef75"
         default_border pixel 2
