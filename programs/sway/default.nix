@@ -22,7 +22,6 @@
         };
 
         fonts = {
-          names = [ "Iosevka" ];
           size = 10.0;
         };
 

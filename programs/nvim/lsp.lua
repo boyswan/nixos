@@ -58,7 +58,7 @@ vim.diagnostic.config({
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 
-local servers = {'tsserver'}
+local servers = {'tsserver', 'nixd', 'rust_analyzer', 'wgsl_analyzer', 'cssls'}
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -66,73 +66,12 @@ for _, lsp in pairs(servers) do
   }
 end
 
-require'lspconfig'.rust_analyzer.setup{
+
+require'lspconfig'.nil_ls.setup{
   -- root_dir = function(fname)    
   --   return os.getenv( "HOME" ) .. "/.local/share/nvim/mason/bin"
   -- end,
-  -- root_dir = function(fname)    
-  --   return os.getenv( "HOME" ) .. "/.rustup/toolchains/nightly-x86_64-apple-darwin/bin"
-  -- end,
-  -- cmd = {
-  --   'rust_analyzer',
-  -- },
-  cmd = {
-    'rustup',
-    'run',
-    'nightly',
-    'rust-analyzer',
-  },
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    ["rust_analyzer"] = {
-      proc_macro =  false,
-    }
-  }
-}
-
-require'lspconfig'.wgsl_analyzer.setup{
-  root_dir = function(fname)    
-    return os.getenv( "HOME" ) .. "/.local/share/nvim/mason/bin"
-  end,
-  cmd = {
-    'wgsl_analyzer',
-  },
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require'lspconfig'.ocamllsp.setup{
-  root_dir = function(fname)    
-    return os.getenv( "HOME" ) .. "/.local/share/nvim/mason/bin"
-  end,
-  cmd = {
-    'ocamllsp',
-  },
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require'lspconfig'.rescriptls.setup{
-  root_dir = function(fname)    
-    return os.getenv( "HOME" ) .. "/.local/share/nvim/mason/bin"
-  end,
-  cmd = {
-    'rescript-lsp',
-    '--stdio'
-  },
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require'lspconfig'.cssls.setup{
-  root_dir = function(fname)    
-    return os.getenv( "HOME" ) .. "/.local/share/nvim/mason/bin"
-  end,
-  cmd = {
-    'vscode-css-language-server',
-    '--stdio'
-  },
+  cmd = { 'nil' },
   on_attach = on_attach,
   capabilities = capabilities,
 }
@@ -182,13 +121,4 @@ cmp.setup {
 
 
 require"fidget".setup{}
-require("mason").setup({
- ui = {
-        keymaps = {
-            apply_language_filter = "<C-s>",
-        },
-    },
-  })
-
-require("mason-lspconfig").setup()
 

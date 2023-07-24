@@ -49,6 +49,7 @@
     google-chrome
     firefox
     clang 
+    cmake
     dconf
     zig
     ripgrep
@@ -59,6 +60,7 @@
     gitui
     bat
     jq
+    nil
   ];
 
 }

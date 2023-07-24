@@ -4,10 +4,10 @@
     enable = true;
     systemd.enable = true;
     settings = [{
-      height = 30;
+      height = 24;
       # layer = "top";
       position = "top";
-      tray = { spacing = 10; };
+      tray = { spacing = 6; };
       modules-center = [ "sway/window" ];
       modules-left = [ "sway/workspaces" "sway/mode" ];
       modules-right = [
@@ -21,55 +21,38 @@
         "tray"
       ];
       battery = {
-        format = "{capacity}% {icon}";
-        format-alt = "{time} {icon}";
-        format-charging = "{capacity}% ";
-        format-icons = [ "" "" "" "" "" ];
-        format-plugged = "{capacity}% ";
+        format = "BAT {capacity}%";
+        format-charging = "BAT +{capacity}%";
+        format-plugged = "BAT +{capacity}%";
         states = {
           critical = 15;
           warning = 30;
         };
       };
       clock = {
-        format-alt = "{:%Y-%m-%d}";
-        tooltip-format = "{:%Y-%m-%d | %H:%M}";
+        format = "{:%Y-%m-%d  %H:%M}";
       };
       cpu = {
-        format = "{usage}% ";
-        tooltip = false;
+        format = "CPU {usage}%";
       };
-      memory = { format = "{}% "; };
+      memory = { format = "MEM {}%"; };
       network = {
         interval = 1;
-        format-alt = "{ifname}: {ipaddr}/{cidr}";
-        format-disconnected = "Disconnected ⚠";
-        format-ethernet = "{ifname}: {ipaddr}/{cidr}   up: {bandwidthUpBits} down: {bandwidthDownBits}";
-        format-linked = "{ifname} (No IP) ";
-        format-wifi = "{essid} ({signalStrength}%) ";
+        format = "{ifname}: {ipaddr}/{cidr}";
+        format-disconnected = "OFFLINE";
+        # format-ethernet = "{ifname}: {ipaddr}/{cidr}   up: {bandwidthUpBits} down: {bandwidthDownBits}";
+        # format-linked = "{ifname} (No IP) ";
+        format-wifi = "WIFI {essid} {ipaddr} {signalStrength}%";
       };
       pulseaudio = {
-        format = "{volume}% {icon} {format_source}";
-        format-bluetooth = "{volume}% {icon} {format_source}";
-        format-bluetooth-muted = " {icon} {format_source}";
-        format-icons = {
-          car = "";
-          default = [ "" "" "" ];
-          handsfree = "";
-          headphones = "";
-          headset = "";
-          phone = "";
-          portable = "";
-        };
-        format-muted = " {format_source}";
-        format-source = "{volume}% ";
-        format-source-muted = "";
+        format = "VOL {volume}%";
+        format-muted = "MUTE";
         on-click = "pavucontrol";
       };
       "sway/mode" = { format = ''<span style="italic">{}</span>''; };
       temperature = {
         critical-threshold = 80;
-        format = "{temperatureC}°C ";
+        format = "TEMP {temperatureC}°C ";
       };
     }];
 
@@ -78,11 +61,11 @@
         @define-color white #ffffff;
         @define-color red #de5d68;
         @define-color focused #2c2d31;
+        @define-color blue #383838;
 
         * {
           font-size: 14px;
-          font-family: Iosevka Nerd Font;
-          color: @white;
+          font-family: monospace;
         }
 
         window#waybar {
@@ -90,14 +73,17 @@
           color: @white;
         }
 
-        widget > *{
-          margin-right: 20px;
+        widget > * {
+          margin-right: 14px;
+          color: @white;
         }
 
-        #workspaces button.focused {
+         #workspaces button.focused {
+          color: @white;
+          border: @blue;
           background-color: @focused;
-        }
-
+         }
+        
         #workspaces button.urgent {
           color: @red;
         }

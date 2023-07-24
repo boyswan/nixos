@@ -82,10 +82,12 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
+  virtualisation.docker.enable = true;
+
   users.users.jack = {
     isNormalUser = true;
     description = "jack";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "docker"];
   };
 
   # Allow unfree packages
