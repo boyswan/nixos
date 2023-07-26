@@ -6,7 +6,7 @@
     (import ./programs/alacritty.nix)
     (import ./programs/lf.nix)
     (import ./programs/zsh.nix)
-    (import ./programs/waybar.nix)
+    # (import ./programs/waybar.nix)
   ];
   
   home = {
@@ -61,6 +61,7 @@
     bat
     jq
     nil
+    brightnessctl
   ];
 
 }

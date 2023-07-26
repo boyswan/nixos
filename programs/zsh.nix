@@ -3,11 +3,12 @@
     enable = true;
 
     shellAliases = {
-      cat = "bat";
+      cat = "bat --theme OneHalfDark";
       ll = "ls -l";
       gs = "git status";
       gi = "gitui";
       nb = "sudo nixos-rebuild switch --flake ~/NixOS/#jack";
+      nd = "nix develop .";
     };
 
     history = {
@@ -21,12 +22,8 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" ];
-      theme = "robbyrussell";
+      theme = "daveverwer";
     };
-
-    envExtra = ''
-      PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
-    '';
 
   };
 

@@ -1,5 +1,16 @@
 { config, pkgs, lib, ... }: {
 
+  programs.i3status = {
+    enable = true;
+    general = {
+      colors = true;
+      color_good = "#98c379";
+      color_degraded = "#d19a66";
+      color_bad = "#e06c75";
+      interval = 1;
+    };
+  };
+
   wayland.windowManager.sway = 
     let 
       mod = "Mod1";
@@ -26,7 +37,16 @@
         };
 
         gaps.inner = 5;
-        bars = [];
+        bars = [{
+            fonts = {
+              names = [ "monospace" ];
+              size = 10.0;
+            };
+            # statusCommand = "i3status-rs $HOME/.config/i3status-rust/config-top.toml";
+            statusCommand = "i3status";
+            position = "top";
+            # extraConfig = "height 16";
+          }];
         input = {
           "type:keyboard" = {
             repeat_delay = "200";
@@ -48,7 +68,6 @@
         client.focused_inactive "#383838" "#383838" "#c678dd" "#383838" "#61afef75"
         default_border pixel 2
         exec gammastep -O 3000
-        exec waybar
         '';
     };
 
