@@ -139,9 +139,15 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   fonts.fonts = with pkgs; [
+    iosevka
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
 
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ "Iosevka" ];
+    sansSerif = [ "Iosevka" ];
+    serif = [ "Iosevka" ];
+  };
 
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;

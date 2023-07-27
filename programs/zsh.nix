@@ -25,6 +25,10 @@
       theme = "daveverwer";
     };
 
+    initExtra= ''
+      export DIRENV_LOG_FORMAT=""
+    '';
+
   };
 
 
