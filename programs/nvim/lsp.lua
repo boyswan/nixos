@@ -58,7 +58,7 @@ vim.diagnostic.config({
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 
-local servers = {'tsserver', 'nixd', 'rust_analyzer', 'wgsl_analyzer', 'cssls'}
+local servers = {'tsserver', 'rust_analyzer', 'wgsl_analyzer', 'cssls', 'nil_ls'}
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -67,14 +67,14 @@ for _, lsp in pairs(servers) do
 end
 
 
-require'lspconfig'.nil_ls.setup{
-  -- root_dir = function(fname)    
-  --   return os.getenv( "HOME" ) .. "/.local/share/nvim/mason/bin"
-  -- end,
-  cmd = { 'nil' },
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
+-- require'lspconfig'.nil_ls.setup{
+--   -- root_dir = function(fname)    
+--   --   return os.getenv( "HOME" ) .. "/.local/share/nvim/mason/bin"
+--   -- end,
+--   cmd = { 'nil' },
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- }
 
 local luasnip = require 'luasnip'
 

@@ -60,8 +60,9 @@
     gitui
     bat
     jq
-    nil
     brightnessctl
+    telegram-desktop
+    (import ./programs/emacs { inherit pkgs; })
   ];
 
 }

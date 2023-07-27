@@ -14,7 +14,11 @@
       enable = true;
       vimAlias = true;
       defaultEditor = true;
+      extraPackages = with pkgs; [
+        nil
+      ];
       extraConfig = ''
+        luafile ${./lsp.lua}
         luafile ${./settings.lua}
         luafile ${./keymaps.lua}
         luafile ${./fuzzy.lua}
@@ -24,9 +28,11 @@
       '';
       plugins = with pkgs.vimPlugins; [
         nvim-lspconfig
+        luasnip
         nvim-treesitter.withAllGrammars
         nvim-web-devicons
         nvim-cmp
+        null-ls-nvim
         cmp-nvim-lsp
         vim-cool
         plenary-nvim
