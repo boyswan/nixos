@@ -1,6 +1,5 @@
 (column-number-mode t)
 (setq scroll-conservatively most-positive-fixnum)      ; Always scroll by one line
-(setq scroll-margin 5)                                ; Add a margin when scrolling vertically
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -8,7 +7,12 @@
 (setq inhibit-startup-screen t) 
 (setq font-lock-maximum-decoration t)
 (setq dired-listing-switches
-    "-l --group-directories-first")
+"-l --group-directories-first")
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 (setq display-line-numbers-type 'relative) 
 (global-display-line-numbers-mode) 
@@ -20,6 +24,7 @@
 (setq ring-bell-function 'ignore)
 (set-frame-font "Iosevka 12" nil t)
 (set-face-attribute 'default nil :height 140)
+
 
 (package-initialize)
 (setq use-package-always-ensure t)
@@ -42,12 +47,15 @@
 
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   (evil-collection-init))
 
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode))
+
 (use-package evil-surround
-  :ensure t
   :config
   (global-evil-surround-mode 1))
 
@@ -56,19 +64,48 @@
   (kbd "l") 'dired-find-file)
 
 (use-package vertico
-  :init
-  (vertico-mode)
-  (setq vertico-cycle t))
+  ;; :init
+  ;; :bind (:map vertico-map
+  ;;        ("C-j" . vertico-next)
+  ;;        ("C-k" . vertico-previous))
+  (vertico-mode t))
+  ;; (setq vertico-cycle t))
 
-(use-package marginalia
-  :init
-  (marginalia-mode))
+;; (straight-use-package '( vertico :files (:defaults "extensions/*")
+;;                          :includes (vertico-buffer
+;;                                     vertico-directory
+;;                                     vertico-flat
+;;                                     vertico-indexed
+;;                                     vertico-mouse
+;;                                     vertico-quick
+;;                                     vertico-repeat
+;;                                     vertico-reverse)))
+;; (use-package savehist
+;;   :ensure t
+;;   :init
 
-(use-package magit
-  :ensure)
+
+;; (use-package marginalia
+;;   :after vertico
+;;   :ensure t
+;;   :custom
+;;   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+;;   :init
+;;   (marginalia-mode))
+
+;; (use-package orderless
+;;   :ensure t
+;;   :init
+;;   ;; Configure a custom style dispatcher (see the Consult wiki)
+;;   ;; (setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)
+;;   ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+;;   (setq completion-styles '(orderless basic)
+;;         completion-category-defaults nil
+;;         completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package magit)
 
 (use-package lsp-mode
-  :ensure
   ;; :commands lsp
   :custom
   ;; what to use when checking on-save. "check" is default, I prefer clippy
@@ -88,7 +125,6 @@
   )
 
 (use-package doom-themes
-  :ensure t
   :config
   (setq doom-themes-enable-bold t)
   (load-theme 'doom-one t)
@@ -97,38 +133,38 @@
 (custom-set-faces `(fringe ((t (:background nil))))) 
 
 (use-package tree-sitter 
-  :ensure t 
   :diminish 
   :config (global-tree-sitter-mode) 
   :hook (tree-sitter-mode . tree-sitter-hl-mode))
 
 (use-package tree-sitter-langs 
-  :ensure t 
   :after tree-sitter)
 
 (global-tree-sitter-mode)
 
 (use-package doom-modeline
-  :ensure t
   :init (doom-modeline-mode 1))
 
 (use-package solaire-mode
-  :ensure t
   :config
   (setq solaire-mode-auto-swap-bg t)
   (solaire-global-mode +1))
 
 (use-package git-gutter
-  :ensure t 
   :hook (prog-mode . git-gutter-mode)
   :config
   (setq git-gutter:update-interval 0.02))
 
 (use-package git-gutter-fringe
-  :ensure t 
   :config
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package nerd-icons)
+(use-package rust-mode)
+
+;; (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
+
+
+

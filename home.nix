@@ -6,7 +6,7 @@
     (import ./programs/alacritty.nix)
     (import ./programs/lf.nix)
     (import ./programs/zsh.nix)
-    # (import ./programs/waybar.nix)
+    (import ./programs/waybar.nix)
   ];
   
   home = {
@@ -45,13 +45,10 @@
 
   home.stateVersion = "23.05";
   home.packages = with pkgs; [ 
+    dconf 
     btop 
     google-chrome
     firefox
-    clang 
-    cmake
-    dconf
-    zig
     ripgrep
     neofetch
     gammastep
@@ -62,7 +59,11 @@
     jq
     brightnessctl
     telegram-desktop
-    (import ./programs/emacs { inherit pkgs; })
+    discord
+    brave
   ];
+  
+  # programs.emacs.enable = true;
+  # service.emacs.enable = true;
 
 }

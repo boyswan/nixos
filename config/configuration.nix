@@ -60,10 +60,7 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  services.emacs = {
-    enable = true;
-    package = pkgs.emacs; # replace with emacs-gtk, or a version provided by the community overlay if desired.
-  };
+  # services.emacs.enable = true;
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -104,8 +101,19 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
+    # clang 
+    # cmake
+    # dconf
     gnome.gnome-keyring
+    
   ];
+
+  services.emacs = {
+    enable = true;
+    install = true;
+    # defaultEditor = true;
+    package = (import ./../programs/emacs { inherit pkgs; });
+  };
 
   services.gnome.gnome-keyring.enable = true;
 
@@ -143,11 +151,11 @@
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
 
-  fonts.fontconfig.defaultFonts = {
-    monospace = [ "Iosevka" ];
-    sansSerif = [ "Iosevka" ];
-    serif = [ "Iosevka" ];
-  };
+  # fonts.fontconfig.defaultFonts = {
+  #   monospace = [ "Iosevka" ];
+  #   sansSerif = [ "Iosevka" ];
+  #   serif = [ "Iosevka" ];
+  # };
 
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;

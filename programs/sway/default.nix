@@ -16,7 +16,7 @@
       mod = "Mod1";
     in {
       enable = true;
-      wrapperFeatures.gtk = false;
+      wrapperFeatures.gtk = true;
       config = {
         terminal = "alacritty";
         modifier = "${mod}";
@@ -37,16 +37,17 @@
         };
 
         gaps.inner = 5;
-        bars = [{
-            fonts = {
-              names = [ "monospace" ];
-              size = 10.0;
-            };
-            # statusCommand = "i3status-rs $HOME/.config/i3status-rust/config-top.toml";
-            statusCommand = "i3status";
-            position = "top";
-            # extraConfig = "height 16";
-          }];
+        # bars = [{
+        #     fonts = {
+        #       names = [ "monospace" ];
+        #       size = 10.0;
+        #     };
+        #     # statusCommand = "i3status-rs $HOME/.config/i3status-rust/config-top.toml";
+        #     statusCommand = "i3status";
+        #     position = "top";
+        #     # extraConfig = "height 16";
+        #   }];
+	bars = [];
         input = {
           "type:keyboard" = {
             repeat_delay = "200";

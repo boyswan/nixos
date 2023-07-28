@@ -27,6 +27,15 @@
 
     initExtra= ''
       export DIRENV_LOG_FORMAT=""
+
+      function em() {
+        args=$1
+        echo ''${args}
+        pid=$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).pid')
+        swaymsg exec --quiet "emacsclient -c $(pwd)/''${args}" 
+        kill ''${pid}
+      }
+      
     '';
 
   };
