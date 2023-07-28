@@ -23,7 +23,7 @@ keymap("n", "<leader>fh", "<cmd>Telescope harpoon marks<cr>")
 keymap("n", "<leader>m", "<cmd>lua require'harpoon.mark'.add_file()<cr>")
 
 keymap("n", "<leader>y", "\"_dP")
--- keymap("i", "jk", "<esc>")
+keymap("i", "jk", "<esc>")
 
 vim.cmd[[nnoremap <silent> <leader>k <cmd>lua vim.diagnostic.open_float()<CR>]]
 

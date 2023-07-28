@@ -61,6 +61,7 @@
     telegram-desktop
     discord
     brave
+    nil
   ];
   
   # programs.emacs.enable = true;

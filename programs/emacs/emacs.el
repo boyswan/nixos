@@ -4,6 +4,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+
 (setq inhibit-startup-screen t) 
 (setq font-lock-maximum-decoration t)
 (setq dired-listing-switches
@@ -24,7 +25,8 @@
 (setq ring-bell-function 'ignore)
 (set-frame-font "Iosevka 12" nil t)
 (set-face-attribute 'default nil :height 140)
-
+;; (set-face-attribute 'tree-sitter-hl-face nil
+;;   :slant nil)
 
 (package-initialize)
 (setq use-package-always-ensure t)
@@ -64,12 +66,12 @@
   (kbd "l") 'dired-find-file)
 
 (use-package vertico
-  ;; :init
   ;; :bind (:map vertico-map
-  ;;        ("C-j" . vertico-next)
+  ;;        ("C-j" . vertico-next
   ;;        ("C-k" . vertico-previous))
-  (vertico-mode t))
-  ;; (setq vertico-cycle t))
+  :init
+  (vertico-mode t)
+  (setq vertico-cycle t))
 
 ;; (straight-use-package '( vertico :files (:defaults "extensions/*")
 ;;                          :includes (vertico-buffer
@@ -93,15 +95,14 @@
 ;;   :init
 ;;   (marginalia-mode))
 
-;; (use-package orderless
-;;   :ensure t
-;;   :init
-;;   ;; Configure a custom style dispatcher (see the Consult wiki)
-;;   ;; (setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)
-;;   ;;       orderless-component-separator #'orderless-escapable-split-on-space)
-;;   (setq completion-styles '(orderless basic)
-;;         completion-category-defaults nil
-;;         completion-category-overrides '((file (styles partial-completion)))))
+(use-package orderless
+  :init
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)
+  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+  (setq completion-styles '(orderless flex)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package magit)
 
@@ -163,6 +164,8 @@
 
 (use-package nerd-icons)
 (use-package rust-mode)
+(use-package nix-mode
+  :mode "\\.nix\\'")
 
 ;; (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
 

@@ -109,9 +109,8 @@
   ];
 
   services.emacs = {
-    enable = true;
-    install = true;
-    # defaultEditor = true;
+    enable = false;
+    install = false;
     package = (import ./../programs/emacs { inherit pkgs; });
   };
 
