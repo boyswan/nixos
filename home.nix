@@ -46,7 +46,7 @@
   home.stateVersion = "23.05";
   home.packages = with pkgs; [ 
     dconf 
-    btop 
+    htop 
     google-chrome
     firefox
     ripgrep

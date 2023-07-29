@@ -26,16 +26,24 @@
     };
 
     initExtra= ''
+      set -o vi
+
       export DIRENV_LOG_FORMAT=""
 
       function em() {
         args=$1
-        echo ''${args}
         pid=$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).pid')
         swaymsg exec --quiet "emacsclient -c $(pwd)/''${args}" 
         kill ''${pid}
       }
       
+      function emt() {
+        args=$1
+        emacsclient -c -nw $(pwd)/''${args}
+      }
+
+      source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+      ZVM_VI_SURROUND_BINDKEY=s-prefix
     '';
 
   };

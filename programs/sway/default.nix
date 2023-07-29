@@ -68,7 +68,7 @@
         client.focused "#383838" "#383838" "#61afef" "#383838" "#61afef75"
         client.focused_inactive "#383838" "#383838" "#c678dd" "#383838" "#61afef75"
         default_border pixel 2
-        exec gammastep -O 2000
+        exec gammastep -O 3000
         '';
     };
 

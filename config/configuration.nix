@@ -101,16 +101,13 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
-    # clang 
-    # cmake
-    # dconf
     gnome.gnome-keyring
     
   ];
 
   services.emacs = {
-    enable = false;
-    install = false;
+    enable = true;
+    install = true;
     package = (import ./../programs/emacs { inherit pkgs; });
   };
 
