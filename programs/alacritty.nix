@@ -6,7 +6,7 @@
 
       env = {
         # "TERM" = "xterm-256color";
-        "TERM" = "alacritty";
+        "TERM" = "alacritty-direct";
       };
       
       font = {

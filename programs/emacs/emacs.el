@@ -2,8 +2,11 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (column-number-mode t)
-
+(fset 'yes-or-no-p 'y-or-n-p)
+	
 (setq scroll-conservatively most-positive-fixnum)      ; Always scroll by one line
+(setq hscroll-step 1)
+(set-default 'truncate-lines nil)
 (setq inhibit-startup-screen t) 
 (setq font-lock-maximum-decoration t)
 (setq dired-listing-switches
@@ -12,8 +15,11 @@
 ;; (global-undo-tree-mode)
 (global-display-line-numbers-mode) 
 (global-set-key (kbd "C-=") 'text-scale-increase)
+
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-hl-line-mode 1)
+
+(setq-default tab-width 2)
 
 ;; (setq undo-tree-auto-save-history t)
 ;; (setq undo-tree-history-directory-alist '(("." . ,temporary-file-directory)))
@@ -25,7 +31,7 @@
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
 (set-frame-font "Iosevka 12" nil t)
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 120)
 ;; (set-face-attribute 'tree-sitter-hl-face nil
 ;;   :slant nil)
 
@@ -72,59 +78,44 @@
 
 (setq-default evil-escape-key-sequence "jk")
 (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
+(define-key global-map (kbd "C-l") 'windmove-right)
+(define-key global-map (kbd "C-h") 'windmove-left)
+(define-key global-map (kbd "C-j") 'windmove-down)
+(define-key global-map (kbd "C-k") 'windmove-up)
 
 
 (evil-set-leader 'motion (kbd "SPC"))
 (evil-define-key 'normal 'global (kbd "<leader>e") 'dired-jump)
 (evil-define-key 'normal 'global (kbd "<leader>fe") 'find-file)
-;; (evil-define-key 'normal 'global 'dired-mode-map (kbd "<leader>fe") 'find-file)
+(evil-define-key 'normal 'global (kbd "<leader>fb") 'ibuffer)
+(evil-define-key 'normal 'global (kbd "<leader>w") 'delete-window)
+(evil-define-key 'normal 'global (kbd "<leader>q") 'kill-buffer)
+
+(evil-define-key 'normal 'global (kbd "<leader>o") (lambda () (interactive)(split-window-right) (windmove-right)))
+(evil-define-key 'normal 'global (kbd "<leader>i") (lambda () (interactive)(split-window-below) (windmove-down)))
+
 (evil-define-key 'normal dired-mode-map
   (kbd "h") 'dired-up-directory
   (kbd "l") 'dired-find-file)
 
+(use-package dired
+	:ensure nil
+  :commands (dired dired-jump)
+  ;; :custom ((dired-listing-switches "-agho --group-directories-first"))
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map " " 'nil))
+
 (eval-after-load 'evil-ex
   '(evil-ex-define-cmd "W" 'save-buffer))
 
-;; (eval-after-load 'evil-ex
-;;   '(evil-ex-define-cmd "Q" 'kill-emacs))
-
 
 (use-package vertico
-  ;; :bind (:map vertico-map
-  ;;        ("C-j" . vertico-next
-  ;;        ("C-k" . vertico-previous))
   :init
-
   (vertico-mode t)
   (setq vertico-cycle t))
 
-;; (straight-use-package '( vertico :files (:defaults "extensions/*")
-;;                          :includes (vertico-buffer
-;;                                     vertico-directory
-;;                                     vertico-flat
-;;                                     vertico-indexed
-;;                                     vertico-mouse
-;;                                     vertico-quick
-;;                                     vertico-repeat
-;;                                     vertico-reverse)))
-;; (use-package savehist
-;;   :ensure t
-;;   :init
-
-
-;; (use-package marginalia
-;;   :after vertico
-;;   :ensure t
-;;   :custom
-;;   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
-;;   :init
-;;   (marginalia-mode))
-
 (use-package orderless
   :init
-  ;; Configure a custom style dispatcher (see the Consult wiki)
-  ;; (setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)
-  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
   (setq completion-styles '(orderless flex)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
@@ -178,6 +169,11 @@
   :hook (rust-mode . lsp-deferred)
   )
 
+(use-package lsp-ui :commands lsp-ui-mode)
+
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+
 (use-package company
   :ensure
   :custom
@@ -196,7 +192,13 @@
   (load-theme 'doom-one t)
   (doom-themes-org-config))
 
-(custom-set-faces `(fringe ((t (:background nil))))) 
+(custom-set-faces
+	`(default ((t (:foreground: "#aa7aab0" :background "#232326"))))
+	`(fringe ((t (:background nil)))))
+;; `(backgroud-color ((t (:background "#fff000")))))
+
+
+;; (add-to-list 'default-frame-alist '(background-color . "#232333"))
 
 (use-package tree-sitter 
   :diminish 
@@ -217,15 +219,10 @@
   (solaire-global-mode +1))
 
 (use-package git-gutter
-  :hook (prog-mode . git-gutter-mode)
   :config
-  (setq git-gutter:update-interval 0.02))
+  (setq git-gutter:update-interval 0.02)
+	(global-git-gutter-mode t))
 
-(use-package git-gutter-fringe
-  :config
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package nerd-icons)
 (use-package rust-mode)

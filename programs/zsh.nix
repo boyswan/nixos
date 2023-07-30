@@ -26,7 +26,6 @@
     };
 
     initExtra= ''
-      set -o vi
 
       export DIRENV_LOG_FORMAT=""
 
@@ -42,8 +41,6 @@
         emacsclient -c -nw $(pwd)/''${args}
       }
 
-      source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-      ZVM_VI_SURROUND_BINDKEY=s-prefix
     '';
 
   };
