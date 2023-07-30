@@ -30,8 +30,10 @@
 
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
-(set-frame-font "Iosevka 12" nil t)
-(set-face-attribute 'default nil :height 120)
+;; (set-frame-font "Iosevka" nil t)
+(set-face-attribute 'default nil :family "Iosevka" :height 140)
+                    
+;; (set-face-attribute 'default nil :height 120)
 ;; (set-face-attribute 'tree-sitter-hl-face nil
 ;;   :slant nil)
 
@@ -87,9 +89,10 @@
 (evil-set-leader 'motion (kbd "SPC"))
 (evil-define-key 'normal 'global (kbd "<leader>e") 'dired-jump)
 (evil-define-key 'normal 'global (kbd "<leader>fe") 'find-file)
-(evil-define-key 'normal 'global (kbd "<leader>fb") 'ibuffer)
+(evil-define-key 'normal 'global (kbd "<leader>fb") 'consult-project-buffer)
 (evil-define-key 'normal 'global (kbd "<leader>w") 'delete-window)
 (evil-define-key 'normal 'global (kbd "<leader>q") 'kill-buffer)
+(evil-define-key 'normal 'global (kbd "<leader>fl") 'consult-ripgrep)
 
 (evil-define-key 'normal 'global (kbd "<leader>o") (lambda () (interactive)(split-window-right) (windmove-right)))
 (evil-define-key 'normal 'global (kbd "<leader>i") (lambda () (interactive)(split-window-below) (windmove-down)))
@@ -119,7 +122,6 @@
   (setq completion-styles '(orderless flex)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
-
 (use-package magit)
 
 (use-package lsp-mode
@@ -192,23 +194,11 @@
   (load-theme 'doom-one t)
   (doom-themes-org-config))
 
-(custom-set-faces
-	`(default ((t (:foreground: "#aa7aab0" :background "#232326"))))
-	`(fringe ((t (:background nil)))))
-;; `(backgroud-color ((t (:background "#fff000")))))
+;; (custom-set-faces
+;; 	`(default ((t (:foreground: "#aa7aab0" :background "#232326"))))
+;; 	`(fringe ((t (:background nil)))))
 
 
-;; (add-to-list 'default-frame-alist '(background-color . "#232333"))
-
-(use-package tree-sitter 
-  :diminish 
-  :config (global-tree-sitter-mode) 
-  :hook (tree-sitter-mode . tree-sitter-hl-mode))
-
-(use-package tree-sitter-langs 
-  :after tree-sitter)
-
-(global-tree-sitter-mode)
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -219,14 +209,32 @@
   (solaire-global-mode +1))
 
 (use-package git-gutter
+  :hook (prog-mode . git-gutter-mode)
   :config
-  (setq git-gutter:update-interval 0.02)
-	(global-git-gutter-mode t))
+  (setq git-gutter:update-interval 0.02))
 
+(use-package git-gutter-fringe
+  :config
+    (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package nerd-icons)
-(use-package rust-mode)
+(use-package rust-ts-mode)
+(setq treesit-font-lock-level 4)
+
 (use-package nix-mode
   :mode "\\.nix\\'")
-
+(use-package gruber-darker-theme)
+(use-package deadgrep)
 ;; (evil-define-key 'normal 'global (kbd "<leader>e") 'find-file)
+(use-package consult
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :init
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window)
+	(setq completion-styles '(orderless)
+
+  (consult-customize
+   consult-ripgrep )))
