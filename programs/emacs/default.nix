@@ -2,7 +2,7 @@
 
   pkgs.emacsWithPackagesFromUsePackage {
     config = ./emacs.el;
-    package = pkgs.emacsPgtk;
+    package = pkgs.emacs-pgtk;
     defaultInitFile = true;
     alwaysEnsure = true;
     extraEmacsPackages = epkgs: with epkgs; [

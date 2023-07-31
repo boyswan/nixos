@@ -85,6 +85,8 @@
 (define-key global-map (kbd "C-j") 'windmove-down)
 (define-key global-map (kbd "C-k") 'windmove-up)
 
+;; (global-set-key (kbd "S-K") 'find-file)
+;; (global-set-key (kbd "S-F") 'find-file)
 
 (evil-set-leader 'motion (kbd "SPC"))
 (evil-define-key 'normal 'global (kbd "<leader>e") 'dired-jump)
@@ -93,6 +95,7 @@
 (evil-define-key 'normal 'global (kbd "<leader>w") 'delete-window)
 (evil-define-key 'normal 'global (kbd "<leader>q") 'kill-buffer)
 (evil-define-key 'normal 'global (kbd "<leader>fl") 'consult-ripgrep)
+(evil-global-set-key 'normal (kbd "K") 'lsp-ui-doc-glance)
 
 (evil-define-key 'normal 'global (kbd "<leader>o") (lambda () (interactive)(split-window-right) (windmove-right)))
 (evil-define-key 'normal 'global (kbd "<leader>i") (lambda () (interactive)(split-window-below) (windmove-down)))
@@ -143,35 +146,36 @@
   :config
   (setq lsp-file-watch-ignored '(
     "[/\\\\]\\.direnv$"
-    ; SCM tools
     "[/\\\\]\\.git$"
-    "[/\\\\]\\.hg$"
-    "[/\\\\]\\.bzr$"
-    "[/\\\\]_darcs$"
-    "[/\\\\]\\.svn$"
-    "[/\\\\]_FOSSIL_$"
-    ; IDE tools
-    "[/\\\\]\\.idea$"
-    "[/\\\\]\\.ensime_cache$"
-    "[/\\\\]\\.eunit$"
-    "[/\\\\]node_modules$"
-    "[/\\\\]\\.fslckout$"
-    "[/\\\\]\\.tox$"
-    "[/\\\\]\\.stack-work$"
-    "[/\\\\]\\.bloop$"
-    "[/\\\\]\\.metals$"
-    "[/\\\\]target$"
-    ; Autotools output
-    "[/\\\\]\\.deps$"
-    "[/\\\\]build-aux$"
-    "[/\\\\]autom4te.cache$"
-    "[/\\\\]\\.reference$"))
+		"[/\\\\]target$"
+		"[/\\\\]node_modules$"
+   ))
   (setq lsp-restart 'auto-restart)
   (setq lsp-keep-workspace-alive nil)
-  :hook (rust-mode . lsp-deferred)
+	(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  :hook
+	(rust-ts-mode . lsp-deferred)
   )
 
-(use-package lsp-ui :commands lsp-ui-mode)
+(setq lsp-eldoc-enable-hover nil)
+
+(use-package lsp-ui
+  :commands lsp-ui-mode
+	:init
+	(setq lsp-ui-doc-enable t)
+	:config
+	(setq lsp-ui-doc-position 'at-point)
+	(setq lsp-ui-peek-always-show nil))
+
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :after lsp-mode
+;;   :init
+;;   (setq lsp-ui-doc-enable nil)
+;; 	:config
+;; 	(setq lsp-ui-doc-position 'at-point)
+;;   :bind
+;;   (("s-p" . 'lsp-ui-doc-show)))	
 
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
@@ -179,7 +183,7 @@
 (use-package company
   :ensure
   :custom
-  (company-idle-delay 0.5) ;; how long to wait until popup
+  (company-idle-delay 0.1) ;; how long to wait until popup
   ;; (company-begin-commands nil) ;; uncomment to disable popup
   :bind
   (:map company-active-map
@@ -194,11 +198,11 @@
   (load-theme 'doom-one t)
   (doom-themes-org-config))
 
-;; (custom-set-faces
-;; 	`(default ((t (:foreground: "#aa7aab0" :background "#232326"))))
-;; 	`(fringe ((t (:background nil)))))
+(custom-set-faces
+	`(default ((t (:foreground "#bbc2cf" :background "#232326")))))
 
-
+(set-face-background 'hl-line "#2A2A31")
+(set-face-background 'mode-line "#2A2A31")
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -221,12 +225,13 @@
 
 (use-package nerd-icons)
 (use-package rust-ts-mode)
+
 (setq treesit-font-lock-level 4)
 
 (use-package nix-mode
   :mode "\\.nix\\'")
 (use-package gruber-darker-theme)
-(use-package deadgrep)
+(use-package atom-one-dark-theme)
 ;; (evil-define-key 'normal 'global (kbd "<leader>e") 'find-file)
 (use-package consult
   :hook (completion-list-mode . consult-preview-at-point-mode)
