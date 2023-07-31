@@ -19,6 +19,7 @@
 (global-hl-line-mode 1)
 
 (setq-default tab-width 2)
+(setq evil-shift-width 2)
 ;; (setq-default line-spacing 0.2)
 ;; (setq-default 'truncate-lines nil)
 ;; (setq undo-tree-auto-save-history t)

@@ -22,8 +22,19 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" ];
-      theme = "daveverwer";
     };
+
+    plugins = [
+      {
+        name = "typewritten";
+        src = pkgs.fetchFromGitHub {
+          owner = "reobin";
+          repo = "typewritten";
+          rev  = "v1.5.1";
+          sha256 = "sha256-qiC4IbmvpIseSnldt3dhEMsYSILpp7epBTZ53jY18x8=";
+        };
+      }
+    ];
 
     initExtra= ''
 
@@ -40,6 +51,10 @@
         args=$1
         emacsclient -c -nw $(pwd)/''${args}
       }
+
+        fpath+=$HOME/.zsh/typewritten
+        autoload -U promptinit; promptinit
+        prompt typewritten
 
     '';
 
