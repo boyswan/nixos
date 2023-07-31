@@ -3,10 +3,9 @@
 (scroll-bar-mode -1)
 (column-number-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
-	
+
 (setq scroll-conservatively most-positive-fixnum)      ; Always scroll by one line
 (setq hscroll-step 1)
-(set-default 'truncate-lines nil)
 (setq inhibit-startup-screen t) 
 (setq font-lock-maximum-decoration t)
 (setq dired-listing-switches
@@ -20,7 +19,8 @@
 (global-hl-line-mode 1)
 
 (setq-default tab-width 2)
-
+;; (setq-default line-spacing 0.2)
+;; (setq-default 'truncate-lines nil)
 ;; (setq undo-tree-auto-save-history t)
 ;; (setq undo-tree-history-directory-alist '(("." . ,temporary-file-directory)))
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
@@ -31,7 +31,10 @@
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
 ;; (set-frame-font "Iosevka" nil t)
-(set-face-attribute 'default nil :family "Iosevka" :height 140)
+(set-face-attribute 'default nil :family "Iosevka" :height 125)
+;; (set-face-attribute 'default nil :family "PragmataPro Mono" :height 130)
+;; (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140)
+;; (set-frame-font "Iosevka 14" nil t)
                     
 ;; (set-face-attribute 'default nil :height 120)
 ;; (set-face-attribute 'tree-sitter-hl-face nil
@@ -200,7 +203,6 @@
 
 (custom-set-faces
 	`(default ((t (:foreground "#bbc2cf" :background "#232326")))))
-
 (set-face-background 'hl-line "#2A2A31")
 (set-face-background 'mode-line "#2A2A31")
 
@@ -224,7 +226,10 @@
     (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package nerd-icons)
-(use-package rust-ts-mode)
+(use-package 
+  :ensure nil 
+  :config
+  (rust-ts-mode t))
 
 (setq treesit-font-lock-level 4)
 
@@ -232,6 +237,7 @@
   :mode "\\.nix\\'")
 (use-package gruber-darker-theme)
 (use-package atom-one-dark-theme)
+
 ;; (evil-define-key 'normal 'global (kbd "<leader>e") 'find-file)
 (use-package consult
   :hook (completion-list-mode . consult-preview-at-point-mode)
@@ -241,5 +247,5 @@
   (advice-add #'register-preview :override #'consult-register-window)
 	(setq completion-styles '(orderless)
 
-  (consult-customize
-   consult-ripgrep )))
+(consult-customize
+	 consult-ripgrep )))
