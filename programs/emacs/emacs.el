@@ -8,8 +8,7 @@
 (setq hscroll-step 1)
 (setq inhibit-startup-screen t) 
 (setq font-lock-maximum-decoration t)
-(setq dired-listing-switches
-      "-l --group-directories-first")
+(setq dired-listing-switches "-l --group-directories-first")
 
 ;; (global-undo-tree-mode)
 (global-display-line-numbers-mode) 
@@ -20,10 +19,6 @@
 
 (setq-default tab-width 2)
 (setq evil-shift-width 2)
-;; (setq-default line-spacing 0.2)
-;; (setq-default 'truncate-lines nil)
-;; (setq undo-tree-auto-save-history t)
-;; (setq undo-tree-history-directory-alist '(("." . ,temporary-file-directory)))
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
@@ -31,15 +26,7 @@
 
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
-;; (set-frame-font "Iosevka" nil t)
-(set-face-attribute 'default nil :family "Iosevka" :height 125)
-;; (set-face-attribute 'default nil :family "PragmataPro Mono" :height 130)
-;; (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140)
-;; (set-frame-font "Iosevka 14" nil t)
-                    
-;; (set-face-attribute 'default nil :height 120)
-;; (set-face-attribute 'tree-sitter-hl-face nil
-;;   :slant nil)
+(set-face-attribute 'default nil :family "Iosevka" :height 120)
 
 (package-initialize)
 (setq use-package-always-ensure t)
@@ -82,15 +69,19 @@
   :config
   (global-evil-surround-mode 1))
 
+(use-package undo-tree
+  :after evil
+  :diminish
+  :config
+  (evil-set-undo-system 'undo-tree)
+  (global-undo-tree-mode 1))
+
 (setq-default evil-escape-key-sequence "jk")
 (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
 (define-key global-map (kbd "C-l") 'windmove-right)
 (define-key global-map (kbd "C-h") 'windmove-left)
 (define-key global-map (kbd "C-j") 'windmove-down)
 (define-key global-map (kbd "C-k") 'windmove-up)
-
-;; (global-set-key (kbd "S-K") 'find-file)
-;; (global-set-key (kbd "S-F") 'find-file)
 
 (evil-set-leader 'motion (kbd "SPC"))
 (evil-define-key 'normal 'global (kbd "<leader>e") 'dired-jump)
@@ -99,8 +90,6 @@
 (evil-define-key 'normal 'global (kbd "<leader>w") 'delete-window)
 (evil-define-key 'normal 'global (kbd "<leader>q") 'kill-buffer)
 (evil-define-key 'normal 'global (kbd "<leader>fl") 'consult-ripgrep)
-(evil-global-set-key 'normal (kbd "K") 'lsp-ui-doc-glance)
-
 (evil-define-key 'normal 'global (kbd "<leader>o") (lambda () (interactive)(split-window-right) (windmove-right)))
 (evil-define-key 'normal 'global (kbd "<leader>i") (lambda () (interactive)(split-window-below) (windmove-down)))
 
@@ -118,94 +107,22 @@
 (eval-after-load 'evil-ex
   '(evil-ex-define-cmd "W" 'save-buffer))
 
-
 (use-package vertico
-  :init
+:init
   (vertico-mode t)
   (setq vertico-cycle t))
-
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless flex)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
-(use-package magit)
-
-(use-package lsp-mode
-  ;; :commands lsp
-  :custom
-  ;; what to use when checking on-save. "check" is default, I prefer clippy
-  (lsp-rust-analyzer-cargo-watch-command "clippy")
-  (lsp-eldoc-render-all t)
-  (lsp-idle-delay 0.6)
-  ;; enable / disable the hints as you prefer:
-  ;; (lsp-inlay-hint-enable t)
-  ;; These are optional configurations. See https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/#lsp-rust-analyzer-display-chaining-hints for a full list
-  ;; (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
-  ;; (lsp-rust-analyzer-display-chaining-hints t)
-  ;; (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-  ;; (lsp-rust-analyzer-display-closure-return-type-hints t)
-  ;; (lsp-rust-analyzer-display-parameter-hints nil)
-  ;; (lsp-rust-analyzer-display-reborrow-hints nil)
-  :config
-  (setq lsp-file-watch-ignored '(
-    "[/\\\\]\\.direnv$"
-    "[/\\\\]\\.git$"
-		"[/\\\\]target$"
-		"[/\\\\]node_modules$"
-   ))
-  (setq lsp-restart 'auto-restart)
-  (setq lsp-keep-workspace-alive nil)
-	(add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  :hook
-	(rust-ts-mode . lsp-deferred)
-  )
-
-(setq lsp-eldoc-enable-hover nil)
-
-(use-package lsp-ui
-  :commands lsp-ui-mode
-	:init
-	(setq lsp-ui-doc-enable t)
-	:config
-	(setq lsp-ui-doc-position 'at-point)
-	(setq lsp-ui-peek-always-show nil))
-
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :after lsp-mode
-;;   :init
-;;   (setq lsp-ui-doc-enable nil)
-;; 	:config
-;; 	(setq lsp-ui-doc-position 'at-point)
-;;   :bind
-;;   (("s-p" . 'lsp-ui-doc-show)))	
-
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
-
-(use-package company
-  :ensure
-  :custom
-  (company-idle-delay 0.1) ;; how long to wait until popup
-  ;; (company-begin-commands nil) ;; uncomment to disable popup
-  :bind
-  (:map company-active-map
-	      ("C-n". company-select-next)
-	      ("C-p". company-select-previous)
-	      ("M-<". company-select-first)
-	      ("M->". company-select-last)))
 
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t)
-  (load-theme 'doom-one t)
+  ;; (load-theme 'doom-one t)
   (doom-themes-org-config))
 
 (custom-set-faces
 	`(default ((t (:foreground "#bbc2cf" :background "#232326")))))
 (set-face-background 'hl-line "#2A2A31")
 (set-face-background 'mode-line "#2A2A31")
+(set-face-background 'line-number "#232326")
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -227,17 +144,20 @@
     (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package nerd-icons)
-(use-package 
-  :ensure nil 
-  :config
-  (rust-ts-mode t))
-
-(setq treesit-font-lock-level 4)
+(use-package rust-ts-mode)
+;; (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
+(setq treesit-font-lock-level 3)
 
 (use-package nix-mode
   :mode "\\.nix\\'")
-(use-package gruber-darker-theme)
+
+;; (use-package gruber-darker-theme)
+
+;; (add-hook 'after-init-hook (lambda () (load-theme 'gruber-darker-theme t)))
+
 (use-package atom-one-dark-theme)
+(use-package iedit)
+(load-theme 'atom-one-dark t)
 
 ;; (evil-define-key 'normal 'global (kbd "<leader>e") 'find-file)
 (use-package consult
@@ -247,6 +167,44 @@
         register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
 	(setq completion-styles '(orderless)
+  (consult-customize
+     consult-ripgrep )))
 
-(consult-customize
-	 consult-ripgrep )))
+
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless flex)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+(use-package magit)
+
+
+
+(use-package eglot
+  :hook ((rust-ts-mode) . eglot-ensure)
+	:init
+	(evil-define-key 'normal 'global (kbd "<leader>f") 'eglot-format-buffer)
+  :config (add-to-list 'eglot-server-programs
+                       `(rust-ts-mode . ("rust-analyzer" :initializationOptions
+                                     ( :procMacro (:enable t)
+                                       :cargo ( 
+                                               :features "all"))))))
+
+(setq eldoc-echo-area-use-multiline-p nil)
+(use-package markdown-mode)
+(use-package eldoc-box)
+
+(eval-after-load "eldoc"
+	'(evil-define-key 'normal 'global (kbd "K") 'eldoc-box-help-at-point))
+
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+
+(use-package corfu
+  :init
+  (global-corfu-mode))
+
+(setq corfu-auto t
+            corfu-auto-delay 0
+            corfu-auto-prefix 0
+            completion-styles '(basic))

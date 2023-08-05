@@ -54,6 +54,7 @@
     gammastep
     wl-clipboard
     slurp
+    grim
     gitui
     bat
     jq
