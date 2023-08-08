@@ -1,7 +1,7 @@
 { pkgs }:
 
   pkgs.emacsWithPackagesFromUsePackage {
-    config = ./emacs.el;
+    config = ./init.el;
     package = pkgs.emacs-pgtk;
     defaultInitFile = true;
     alwaysEnsure = true;

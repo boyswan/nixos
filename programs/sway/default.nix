@@ -37,17 +37,17 @@
         };
 
         gaps.inner = 5;
-        # bars = [{
-        #     fonts = {
-        #       names = [ "monospace" ];
-        #       size = 10.0;
-        #     };
-        #     # statusCommand = "i3status-rs $HOME/.config/i3status-rust/config-top.toml";
-        #     statusCommand = "i3status";
-        #     position = "top";
-        #     # extraConfig = "height 16";
-        #   }];
-	bars = [];
+        bars = [{
+            fonts = {
+              names = [ "monospace" ];
+              size = 10.0;
+            };
+            # statusCommand = "i3status-rs $HOME/.config/i3status-rust/config-top.toml";
+            statusCommand = "i3status";
+            position = "top";
+            # extraConfig = "height 16";
+          }];
+        # bars = [];
         input = {
           "type:keyboard" = {
             repeat_delay = "200";

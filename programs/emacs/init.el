@@ -3,9 +3,8 @@
 (scroll-bar-mode -1)
 (column-number-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
-
-(setq scroll-conservatively most-positive-fixnum)      ; Always scroll by one line
-(setq hscroll-step 1)
+(setq scroll-conservatively most-positive-fixnum)      ; Always scroll by one line (setq hscroll-step 1)
+(setq truncate-lines nil)
 (setq inhibit-startup-screen t) 
 (setq font-lock-maximum-decoration t)
 (setq dired-listing-switches "-l --group-directories-first")
@@ -19,8 +18,11 @@
 
 (setq-default tab-width 2)
 (setq evil-shift-width 2)
-(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+(setq backup-by-copying t)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq delete-old-versions t)
+(setq version-control t)
+(setq create-lockfiles nil)
 
 (setq display-line-numbers-type 'relative) 
 
@@ -33,7 +35,7 @@
 (eval-when-compile (require 'use-package))
 
 (use-package direnv
-  :custom
+  :init
   (setq direnv-always-show-summary nil)
   (setq direnv-show-paths-in-summary nil)
   :config
@@ -84,7 +86,7 @@
 (define-key global-map (kbd "C-k") 'windmove-up)
 
 (evil-set-leader 'motion (kbd "SPC"))
-(evil-define-key 'normal 'global (kbd "<leader>e") 'dired-jump)
+(evil-define-key 'normal 'global (kbd "<leader>e") 'dirvish)
 (evil-define-key 'normal 'global (kbd "<leader>fe") 'find-file)
 (evil-define-key 'normal 'global (kbd "<leader>fb") 'consult-project-buffer)
 (evil-define-key 'normal 'global (kbd "<leader>w") 'delete-window)
@@ -93,16 +95,14 @@
 (evil-define-key 'normal 'global (kbd "<leader>o") (lambda () (interactive)(split-window-right) (windmove-right)))
 (evil-define-key 'normal 'global (kbd "<leader>i") (lambda () (interactive)(split-window-below) (windmove-down)))
 
-(evil-define-key 'normal dired-mode-map
-  (kbd "h") 'dired-up-directory
-  (kbd "l") 'dired-find-file)
 
-(use-package dired
-	:ensure nil
-  :commands (dired dired-jump)
-  ;; :custom ((dired-listing-switches "-agho --group-directories-first"))
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map " " 'nil))
+;; (use-package dired
+;; 	:ensure nil
+;;   ;; :commands (dired dired-jump)
+;;   ;; :custom ((dired-listing-switches "-agho --group-directories-first"))
+;;   ;; :config
+;;   ;; (evil-collection-define-key 'normal 'dired-mode-map " " 'nil)
+;;   )
 
 (eval-after-load 'evil-ex
   '(evil-ex-define-cmd "W" 'save-buffer))
@@ -163,8 +163,8 @@
 (use-package consult
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
+  (setq register-preview-delay 0.5)
+  (setq register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
 	(setq completion-styles '(orderless)
   (consult-customize
@@ -179,32 +179,106 @@
 (use-package magit)
 
 
-
-(use-package eglot
-  :hook ((rust-ts-mode) . eglot-ensure)
-	:init
-	(evil-define-key 'normal 'global (kbd "<leader>f") 'eglot-format-buffer)
-  :config (add-to-list 'eglot-server-programs
-                       `(rust-ts-mode . ("rust-analyzer" :initializationOptions
-                                     ( :procMacro (:enable t)
-                                       :cargo ( 
-                                               :features "all"))))))
-
-(setq eldoc-echo-area-use-multiline-p nil)
-(use-package markdown-mode)
-(use-package eldoc-box)
-
-(eval-after-load "eldoc"
-	'(evil-define-key 'normal 'global (kbd "K") 'eldoc-box-help-at-point))
-
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
-(use-package corfu
-  :init
-  (global-corfu-mode))
+;; (use-package corfu
+;;   :init
+;;   (global-corfu-mode))
 
-(setq corfu-auto t
-            corfu-auto-delay 0
-            corfu-auto-prefix 0
-            completion-styles '(basic))
+;; (setq corfu-auto t
+;;             corfu-auto-delay 0
+;;             corfu-auto-prefix 0
+;;             completion-styles '(basic))
+
+;; (use-package eglot
+;;   :hook
+;; 		((rust-ts-mode) . eglot-ensure)
+;; 		((eglot-managed-mode) . (evil-define-key 'normal 'global (kbd "K") 'eldoc-box-help-at-point))
+;; 	:init
+;; 	(evil-define-key 'normal 'global (kbd "<leader>f") 'eglot-format-buffer)
+;;   :config (add-to-list 'eglot-server-programs
+;;                        `(rust-ts-mode . ("rust-analyzer" :initializationOptions
+;;                                      ( :procMacro (:enable t)
+;;                                        :cargo ( 
+;;                                                :features "all"))))))
+
+;; (setq eldoc-echo-area-use-multiline-p nil)
+;; (use-package markdown-mode)
+
+;; (use-package eldoc-box)
+;; (global-eldoc-mode -1)
+
+;; (evil-define-key 'normal 'global (kbd "K") 'eldoc-box-help-at-point)
+;; (add-hook 'eglot-managed-mode-hook (evil-define-key 'normal 'global (kbd "K") 'eldoc-box-help-at-point))
+
+
+(use-package lsp-mode
+	;; :commands lsp
+	:custom
+	(lsp-rust-analyzer-cargo-watch-command "clippy")
+	(lsp-eldoc-render-all t)
+	(lsp-idle-delay 0.6)
+	:config
+	(setq lsp-file-watch-ignored '(
+		"[/\\\\]\\.direnv$"
+		"[/\\\\]\\.git$"
+		"[/\\\\]target$"
+		))
+	(setq lsp-restart 'auto-restart)
+	(setq lsp-keep-workspace-alive t)
+	(setq lsp-lens-enable nil)
+	(setq lsp-eldoc-enable-hover nil)
+	(setq lsp-headerline-breadcrumb-enable nil)
+	(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+	:hook
+	(rust-ts-mode . lsp-deferred))
+
+(setq lsp-eldoc-enable-hover nil)
+
+(use-package lsp-ui
+  :commands lsp-ui-mode
+	:init
+	(setq lsp-ui-doc-enable t)
+	(setq lsp-ui-sideline-mode t)
+	:config
+	(setq lsp-ui-doc-position 'at-point)
+	(setq lsp-ui-peek-always-show nil))
+
+(evil-global-set-key 'normal (kbd "K") 'lsp-ui-doc-glance)
+
+
+(use-package company)
+(use-package flycheck)
+
+(add-hook 'after-init-hook 'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(use-package dired
+	:ensure nil
+  :commands (dired dired-jump)
+  ;; :custom ((dired-listing-switches "-agho --group-directories-first"))
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map " " 'nil)
+  (evil-collection-define-key 'normal 'dired-mode-map "q" 'dirvish-quit)
+	)
+
+(evil-define-key 'normal dired-mode-map
+  (kbd "f") 'dirvish-fd
+  (kbd "t") 'dirvish-layout-toggle
+  (kbd "h") 'dired-up-directory
+  (kbd "l") 'dired-find-file)
+
+(use-package dirvish
+  :init
+  (dirvish-override-dired-mode)
+  :commands (dirvish)
+  :config
+	(setq dirvish-use-header-line 'global)    ; make header line span all panes
+
+  (setq dirvish-mode-line-format
+        '(:left (sort symlink) :right (omit yank index)))
+  (setq dirvish-attributes
+        '(file-time file-size collapse subtree-state vc-state)))
+  ;; (setq dired-listing-switches
+  ;;       "-l --almost-all --human-readable --group-directories-first --no-group"))

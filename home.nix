@@ -63,6 +63,8 @@
     discord
     brave
     nil
+    fd
+    slack
   ];
   
   # programs.emacs.enable = true;
