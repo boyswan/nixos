@@ -29,14 +29,14 @@
 
       export DIRENV_LOG_FORMAT=""
 
-      function ema() {
+      function em() {
         args=$1
         pid=$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).pid')
         swaymsg exec --quiet "emacsclient -c" 
         kill ''${pid}
       }
 
-      function em() {
+      function ema() {
         args=$1
         pid=$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).pid')
         swaymsg exec --quiet "emacsclient -c $(pwd)/''${args}" 

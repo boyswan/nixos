@@ -4,7 +4,6 @@
 (column-number-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq scroll-conservatively most-positive-fixnum)      ; Always scroll by one line (setq hscroll-step 1)
-(setq truncate-lines nil)
 (setq inhibit-startup-screen t) 
 (setq font-lock-maximum-decoration t)
 (setq dired-listing-switches "-l --group-directories-first")
@@ -16,10 +15,13 @@
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-hl-line-mode 1)
 
+(setq-default truncate-lines t)
+(global-visual-line-mode nil)
 (setq-default tab-width 2)
 (setq evil-shift-width 2)
 (setq backup-by-copying t)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 (setq delete-old-versions t)
 (setq version-control t)
 (setq create-lockfiles nil)
@@ -261,11 +263,14 @@
   :config
   (evil-collection-define-key 'normal 'dired-mode-map " " 'nil)
   (evil-collection-define-key 'normal 'dired-mode-map "q" 'dirvish-quit)
+  (evil-collection-define-key 'normal 'dired-mode-map "c" 'dired-do-copy)
+  (evil-collection-define-key 'normal 'dired-mode-map "e" 'dired-create-empty-file)
+  (evil-collection-define-key 'normal 'dired-mode-map "y" 'dirvish-yank)
 	)
 
 (evil-define-key 'normal dired-mode-map
   (kbd "f") 'dirvish-fd
-  (kbd "t") 'dirvish-layout-toggle
+  (kbd "r") 'dirvish-layout-toggle
   (kbd "h") 'dired-up-directory
   (kbd "l") 'dired-find-file)
 
@@ -279,6 +284,6 @@
   (setq dirvish-mode-line-format
         '(:left (sort symlink) :right (omit yank index)))
   (setq dirvish-attributes
-        '(file-time file-size collapse subtree-state vc-state)))
+        '(file-time file-size subtree-state vc-state)))
   ;; (setq dired-listing-switches
   ;;       "-l --almost-all --human-readable --group-directories-first --no-group"))
