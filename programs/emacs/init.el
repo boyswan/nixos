@@ -23,8 +23,9 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 (setq delete-old-versions t)
+(setq-default create-lockfiles nil)
 (setq version-control t)
-(setq create-lockfiles nil)
+;; (setq auto-save-file-name-transforms `((".*" "~/.emacs-d/autosaves" t)))
 
 (setq display-line-numbers-type 'relative) 
 
@@ -45,6 +46,9 @@
 
 ;; (load "./evil")
 ;; (load "~/emacs/slowsplit")
+
+(use-package better-jumper)
+(better-jumper-mode +1)
 
 (use-package evil
   :init
@@ -80,6 +84,14 @@
   (evil-set-undo-system 'undo-tree)
   (global-undo-tree-mode 1))
 
+(defun toggle-fullscreen-buffer () "Fullscreen buffer"
+  (interactive)
+  (if (= 1 (length (window-list)))
+      (jump-to-register '_) 
+    (progn
+      (window-configuration-to-register '_)
+      (delete-other-windows))))
+
 (setq-default evil-escape-key-sequence "jk")
 (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
 (define-key global-map (kbd "C-l") 'windmove-right)
@@ -87,8 +99,29 @@
 (define-key global-map (kbd "C-j") 'windmove-down)
 (define-key global-map (kbd "C-k") 'windmove-up)
 
+(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
+;; (defun dirvish-window-cond ()
+;; 	(cond ((one-window-p 'dirvish)
+;; 				(t (
+;; 					('dirvish)
+;; 					('dirvish-layout-toggle))))
+
+(defun sized-dirvish () "Simple dirvish when multi window"
+  (interactive)
+  (if (= 1 (length (window-list)))
+    (progn
+			(setq-default dirvish-default-layout '(0.2 0.3 0.5))
+      (dirvish))
+    (progn
+			(setq-default dirvish-default-layout '(0 1.0 0))
+      (dirvish))))
+
 (evil-set-leader 'motion (kbd "SPC"))
+;; (evil-define-key 'normal 'global (kbd "<leader>e") 'sized-dirvish)
 (evil-define-key 'normal 'global (kbd "<leader>e") 'dirvish)
+(evil-define-key 'normal 'global (kbd "C-f") 'toggle-fullscreen-buffer)
 (evil-define-key 'normal 'global (kbd "<leader>fe") 'find-file)
 (evil-define-key 'normal 'global (kbd "<leader>fb") 'consult-project-buffer)
 (evil-define-key 'normal 'global (kbd "<leader>w") 'delete-window)
@@ -103,7 +136,7 @@
 ;;   ;; :commands (dired dired-jump)
 ;;   ;; :custom ((dired-listing-switches "-agho --group-directories-first"))
 ;;   ;; :config
-;;   ;; (evil-collection-define-key 'normal 'dired-mode-map " " 'nil)
+;;   ;; (kbd " ") 'nil)
 ;;   )
 
 (eval-after-load 'evil-ex
@@ -127,7 +160,9 @@
 (set-face-background 'line-number "#232326")
 
 (use-package doom-modeline
-  :init (doom-modeline-mode 1))
+  :init (doom-modeline-mode 1)
+  :config
+	(setq doom-modeline-buffer-file-name-style 'relative-to-project))
 
 (use-package solaire-mode
   :config
@@ -165,7 +200,7 @@
 (use-package consult
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
-  (setq register-preview-delay 0.5)
+  (setq register-preview-delay 0.1)
   (setq register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
 	(setq completion-styles '(orderless)
@@ -255,24 +290,37 @@
 
 (add-hook 'after-init-hook 'global-flycheck-mode)
 (add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'lsp-mode-hook (evil-define-key 'normal 'global (kbd "<leader>ff") 'lsp-format-buffer))
 
-(use-package dired
-	:ensure nil
-  :commands (dired dired-jump)
-  ;; :custom ((dired-listing-switches "-agho --group-directories-first"))
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map " " 'nil)
-  (evil-collection-define-key 'normal 'dired-mode-map "q" 'dirvish-quit)
-  (evil-collection-define-key 'normal 'dired-mode-map "c" 'dired-do-copy)
-  (evil-collection-define-key 'normal 'dired-mode-map "e" 'dired-create-empty-file)
-  (evil-collection-define-key 'normal 'dired-mode-map "y" 'dirvish-yank)
-	)
+;; (use-package dired
+;; 	:ensure nil
+;;   :commands (dired dired-jump))
+
+;; (add-hook 'dired-mode-hook (lambda () (unless 'one-window-p 'dirvish-layout-toggle)))
+;; (add-hook 'dired-mode-hook (lambda ()  (dirvish-layout-toggle)))
 
 (evil-define-key 'normal dired-mode-map
   (kbd "f") 'dirvish-fd
   (kbd "r") 'dirvish-layout-toggle
   (kbd "h") 'dired-up-directory
-  (kbd "l") 'dired-find-file)
+  (kbd "l") 'dired-find-file
+  (kbd "q") 'dirvish-quit
+  (kbd "s") 'dirvish-subtree-clear
+  (kbd "e") 'dirvish-layout-toggle
+  (kbd "SPC") 'dirvish-subtree-toggle
+  (kbd "r") 'rename-file
+  (kbd "c") 'dired-do-copy
+  (kbd "w") 'dired-create-empty-file
+  (kbd "y") 'dirvish-yank
+	)
+
+
+;; (defun sized-dirvish () "Simple dirvish when multi window"
+;;   (interactive)
+;;   (if (< 1 (length (window-list)))
+;;       (dirvish-layout-toggle)))
+
+;; (add-hook 'dirvish-setup-hook 'sized-dirvish)
 
 (use-package dirvish
   :init
@@ -287,3 +335,5 @@
         '(file-time file-size subtree-state vc-state)))
   ;; (setq dired-listing-switches
   ;;       "-l --almost-all --human-readable --group-directories-first --no-group"))
+
+

@@ -84,7 +84,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker.enable = false;
 
   users.users.jack = {
     isNormalUser = true;

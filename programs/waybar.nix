@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
 
   programs.waybar = {
-    enable = false;
+    enable = true;
     systemd.enable = true;
     settings = [{
       height = 30;
