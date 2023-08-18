@@ -7,6 +7,7 @@
       ll = "ls -l";
       gs = "git status";
       gi = "gitui";
+      j = "just";
       nb = "sudo nixos-rebuild switch --flake ~/NixOS/#jack";
       nd = "nix develop .";
     };

@@ -35,7 +35,6 @@ g.netrw_liststyle = 3
 g.netrw_banner = 0
 g.tpipeline_cursormoved = 1
 g.tpipline_fillcentre = 1
-g.lf_netrw = 1
 
 require('onedark').setup {
     style = 'warmer'

@@ -105,11 +105,11 @@
     
   ];
 
-  services.emacs = {
-    enable = true;
-    install = true;
-    package = (import ./../programs/emacs { inherit pkgs; });
-  };
+  # services.emacs = {
+  #   enable = true;
+  #   install = true;
+  #   package = (import ./../programs/emacs { inherit pkgs; });
+  # };
 
   services.gnome.gnome-keyring.enable = true;
 

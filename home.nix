@@ -65,6 +65,7 @@
     nil
     fd
     slack
+    moreutils 
   ];
   
   # programs.emacs.enable = true;

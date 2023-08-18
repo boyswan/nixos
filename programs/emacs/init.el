@@ -7,7 +7,7 @@
 (setq inhibit-startup-screen t) 
 (setq font-lock-maximum-decoration t)
 (setq dired-listing-switches "-l --group-directories-first")
-
+(setq-default pgtk-wait-for-event-timeout 0)
 ;; (global-undo-tree-mode)
 (global-display-line-numbers-mode) 
 (global-set-key (kbd "C-=") 'text-scale-increase)
@@ -182,6 +182,26 @@
 
 (use-package nerd-icons)
 (use-package rust-ts-mode)
+(use-package typescript-ts-mode
+  :config
+  ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
+  ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
+  (define-derived-mode typescriptreact-mode typescript-ts-mode
+    "TypeScript TSX")
+
+  ;; use our derived mode for tsx files
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+  ;; by default, typescript-mode is mapped to the treesitter typescript parser
+  ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
+  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
+
+(use-package go-ts-mode)
+(setq go-ts-mode-indent-offset 2)
+
+(use-package web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+
+
 ;; (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
 (setq treesit-font-lock-level 3)
 
@@ -204,8 +224,8 @@
   (setq register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
 	(setq completion-styles '(orderless)
-  (consult-customize
-     consult-ripgrep )))
+				(consult-customize
+				 consult-ripgrep )))
 
 
 (use-package orderless
@@ -220,13 +240,15 @@
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
 ;; (use-package corfu
+;; 	:custom
+;; 	(corfu-separator ?\s)
 ;;   :init
 ;;   (global-corfu-mode))
 
 ;; (setq corfu-auto t
-;;             corfu-auto-delay 0
-;;             corfu-auto-prefix 0
-;;             completion-styles '(basic))
+;; 	corfu-auto-delay 0.1
+;; 	;; corfu-auto-prefix 0
+;; 	completion-styles '(flex))
 
 ;; (use-package eglot
 ;;   :hook
@@ -269,6 +291,8 @@
 	(setq lsp-headerline-breadcrumb-enable nil)
 	(add-hook 'lsp-mode-hook 'lsp-ui-mode)
 	:hook
+	(go-ts-mode . lsp-deferred)
+	(typescript-ts-mode . lsp-deferred)
 	(rust-ts-mode . lsp-deferred))
 
 (setq lsp-eldoc-enable-hover nil)
@@ -278,6 +302,7 @@
 	:init
 	(setq lsp-ui-doc-enable t)
 	(setq lsp-ui-sideline-mode t)
+	(setq lsp-ui-sideline-diagnostics-max-lines 6)
 	:config
 	(setq lsp-ui-doc-position 'at-point)
 	(setq lsp-ui-peek-always-show nil))
@@ -289,7 +314,7 @@
 (use-package flycheck)
 
 (add-hook 'after-init-hook 'global-flycheck-mode)
-(add-hook 'after-init-hook 'global-company-mode)
+;; (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'lsp-mode-hook (evil-define-key 'normal 'global (kbd "<leader>ff") 'lsp-format-buffer))
 
 ;; (use-package dired
@@ -314,7 +339,6 @@
   (kbd "y") 'dirvish-yank
 	)
 
-
 ;; (defun sized-dirvish () "Simple dirvish when multi window"
 ;;   (interactive)
 ;;   (if (< 1 (length (window-list)))
@@ -332,8 +356,8 @@
   (setq dirvish-mode-line-format
         '(:left (sort symlink) :right (omit yank index)))
   (setq dirvish-attributes
-        '(file-time file-size subtree-state vc-state)))
-  ;; (setq dired-listing-switches
+        '(file-time file-size subtree-state)))
+u ;; (setq dired-listing-switches
   ;;       "-l --almost-all --human-readable --group-directories-first --no-group"))
 
 
