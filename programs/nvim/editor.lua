@@ -13,6 +13,11 @@ vim.api.nvim_set_hl(0, 'DiagnosticVirtualTextError', { bg=colors.bg, fg=colors.d
 vim.api.nvim_set_hl(0, 'DiagnosticVirtualTextInfo', { bg=colors.bg, fg=colors.cyan })
 vim.api.nvim_set_hl(0, 'DiagnosticVirtualTextHint', { bg=colors.bg, fg=colors.orange })
 
+vim.api.nvim_set_hl(0, 'TelescopeResultsDiffChange', { bg=colors.bg, fg=colors.blue })
+vim.api.nvim_set_hl(0, 'TelescopeResultsDiffAdd', { bg=colors.bg, fg=colors.green })
+vim.api.nvim_set_hl(0, 'TelescopeResultsDiffDelete', { bg=colors.bg, fg=colors.red })
+vim.api.nvim_set_hl(0, 'TelescopeResultsDiffUntracked', { bg=colors.bg, fg=colors.orange })
+
 vim.cmd[[hi TSParameter gui=NONE]]
 vim.cmd[[hi TSNamespace gui=NONE]]
 vim.cmd[[hi TSTagAttribute gui=NONE]]

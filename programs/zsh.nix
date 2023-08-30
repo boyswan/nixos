@@ -27,28 +27,7 @@
     };
 
     initExtra= ''
-
       export DIRENV_LOG_FORMAT=""
-
-      function em() {
-        args=$1
-        pid=$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).pid')
-        swaymsg exec --quiet "emacsclient -c" 
-        kill ''${pid}
-      }
-
-      function ema() {
-        args=$1
-        pid=$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).pid')
-        swaymsg exec --quiet "emacsclient -c $(pwd)/''${args}" 
-        kill ''${pid}
-      }
-      
-      function emm() {
-        args=$1
-        emacsclient -c -nw $(pwd)/''${args}
-      }
-
     '';
 
   };
