@@ -20,12 +20,14 @@ require("telescope").setup({
     file_browser = {
       hijack_netrw = true,
 			grouped = true,
+      respect_gitignore = false,
       mappings = {
         ["i"] = {
           -- your custom insert mode mappings
         },
         ["n"] = {
           ["h"] = fb_actions.goto_parent_dir,
+          ["x"] = fb_actions.toggle_hidden,
           ["l"] = require('telescope.actions').select_default,
           -- your custom normal mode mappings
         },

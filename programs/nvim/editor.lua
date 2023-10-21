@@ -29,4 +29,3 @@ vim.cmd[[sign define DiagnosticSignWarn texthl=DiagnosticSignWarn text=]]
 vim.cmd[[sign define DiagnosticSignHint texthl=DiagnosticSignHint text=]]
 vim.cmd[[sign define DiagnosticSignInfo texthl=DiagnosticSignInfo text=]]
 
-

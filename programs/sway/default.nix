@@ -65,9 +65,9 @@
       };
 
       extraConfig = ''
-        client.focused "#383838" "#383838" "#61afef" "#383838" "#61afef75"
-        client.focused_inactive "#383838" "#383838" "#c678dd" "#383838" "#61afef75"
-        default_border pixel 2
+        client.focused "#383838" "#383838" "#51A8B3" "#383838" "#51A8B3"
+        client.focused_inactive "#383838" "#383838" "#A7AAB0" "#383838" "#A7AAB0"
+        default_border pixel 1
         exec gammastep -O 3000
         '';
     };

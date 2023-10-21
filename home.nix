@@ -66,9 +66,9 @@
     fd
     slack
     moreutils 
+    joplin
+    dbeaver
+    gnome.gedit
+    docker_24
   ];
-  
-  # programs.emacs.enable = true;
-  # service.emacs.enable = true;
-
 }

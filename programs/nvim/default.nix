@@ -45,6 +45,7 @@
         comment-nvim
         harpoon
         onedark-nvim
+        true-zen-nvim
         (pluginGit "NoahTheDuke" "vim-just" "927b418" "BmxYWUVBzTowH68eWNrQKV1fNN9d1hRuCnXqbEagRoY=")
       ];
     };

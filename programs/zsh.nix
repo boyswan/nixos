@@ -10,6 +10,8 @@
       j = "just";
       nb = "sudo nixos-rebuild switch --flake ~/NixOS/#jack";
       nd = "nix develop .";
+      jo = "joplin";
+      dc = "docker compose";
     };
 
     history = {
