@@ -12,15 +12,13 @@
   networking.firewall.enable = false;
   networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
-  virtualisation.vmware.guest.enable = true;
-
   time.timeZone = "Europe/London";
 
   users.users.jack = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     initialPassword = "jack";
-    shell = pkgs.zsh;
+    shell = pkgs.nushell;
   };
 
   services.openssh.enable = true;
@@ -39,9 +37,11 @@
 
   services.xserver = {
     enable = true;
-    xkb.layout = "gb";
+    xkb.layout = "gb"; 
     xkb.variant = "mac";
     xkb.model = "macintosh";
+    xkb.options = "caps:escape";
+
     dpi = 96;
 
     desktopManager = {
@@ -60,15 +60,11 @@
   };
 
   services.displayManager.defaultSession = "none+i3";
+  virtualisation.vmware.guest.enable = true;
+
 
   system.stateVersion = "25.05";
 
-  environment.shells = with pkgs; [ bashInteractive zsh ];
-
-  # fileSystems."/mnt/hgfs" = {
-  #   device = ".host:/";
-  #   fsType = "fuse./run/current-system/sw/bin/vmhgfs-fuse";
-  #   options = [ "umask=22" "uid=1000" "gid=100" "allow_other" "auto_unmount" "defaults" ];
-  # };
+  environment.shells = with pkgs; [ bashInteractive zsh nushell ];
 
 }

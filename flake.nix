@@ -17,7 +17,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.jack = {
-                imports = [ ./home.nix ];
+                imports = [ ./programs/home-manager.nix ];
               };
             }
           ];
@@ -26,14 +26,15 @@
         # VM config for Apple Silicon
         jack_vm = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          modules = [ 
+          modules = [
             ./config/aarch64-configuration.nix
             ./config/hardware/aarch64-hardware-configuration.nix
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
               home-manager.users.jack = {
-                imports = [ ./home.nix ];
+                imports = [ ./programs/home-manager.nix ];
               };
             }
           ];
