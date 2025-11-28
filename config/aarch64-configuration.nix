@@ -27,7 +27,7 @@
 
   programs.zsh.enable = true;
 
-  console.keyMap = "uk";
+  console.useXkbConfig = true;
 
   xdg.portal = {
     enable = true;
@@ -38,10 +38,8 @@
   services.xserver = {
     enable = true;
     xkb.layout = "gb"; 
-    xkb.variant = "mac";
-    xkb.model = "macintosh";
+    xkb.model = "pc105"; 
     xkb.options = "caps:escape";
-    videoDrivers = ["vmware"];
 
     dpi = 96;
 
