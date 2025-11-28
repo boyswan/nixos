@@ -35,12 +35,12 @@
   programs.git = {
     enable = true;
     userName = "boyswan";
+    userEmail = "boyswan@vm";
     extraConfig = {
       credential = {
         helper = "${pkgs.gh}/bin/gh auth git-credential";
       };
     };
-   # };
   };
 
   # programs.neovim = {
@@ -87,7 +87,8 @@
     chezmoi
     neofetch
     gammastep
-    wl-clipboard
+    xclip
+    zig
     slurp
     grim
     gh

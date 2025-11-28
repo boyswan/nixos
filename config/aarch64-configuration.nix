@@ -41,6 +41,7 @@
     xkb.variant = "mac";
     xkb.model = "macintosh";
     xkb.options = "caps:escape";
+    videoDrivers = ["vmware"];
 
     dpi = 96;
 
