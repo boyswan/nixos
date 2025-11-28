@@ -8,7 +8,7 @@
       gs = "git status";
       gi = "gitui";
       j = "just";
-      nb = "sudo nixos-rebuild switch --flake ~/NixOS/#jack";
+      nb = "sudo nixos-rebuild switch --flake ~/nix-config/#jack_vm";
       nd = "nix develop .";
       jo = "joplin";
       dc = "docker compose";
@@ -28,9 +28,9 @@
       theme = "robbyrussell";
     };
 
-    initExtra= ''
-      export DIRENV_LOG_FORMAT=""
-    '';
+    # initExtra= ''
+    #   export DIRENV_LOG_FORMAT=""
+    # '';
 
   };
 
