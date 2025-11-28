@@ -75,7 +75,7 @@
   home.stateVersion = "23.05";
 
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Meslo" ]; })
+    nerd-fonts.meslo-lg
     dconf
     htop
     alacritty
