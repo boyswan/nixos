@@ -37,11 +37,12 @@
 
   services.xserver = {
     enable = true;
-    xkb.layout = "gb"; 
-    xkb.model = "pc105"; 
+    xkb.layout = "us";
+    # xkb.layout = "gb"; 
+    # xkb.model = "pc105"; 
     xkb.options = "caps:escape";
-
-    dpi = 96;
+    #
+    # dpi = 96;
 
     desktopManager = {
       xterm.enable = false;
@@ -51,10 +52,10 @@
       lightdm.enable = true;
       sessionCommands = ''
         ${pkgs.xorg.xset}/bin/xset r rate 200 40
-        ${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1200
       '';
     };
 
+    # ${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1200
     windowManager.i3.enable = true;
   };
 
@@ -65,5 +66,17 @@
   system.stateVersion = "25.05";
 
   environment.shells = with pkgs; [ bashInteractive zsh nushell ];
+  environment.systemPackages = with pkgs; [
+    cachix
+    gnumake
+    killall
+    xclip
+    gtkmm3
 
+    # For hypervisors that support auto-resizing, this script forces it.
+    # I've noticed not everyone listens to the udev events so this is a hack.
+    (writeShellScriptBin "xrandr-auto" ''
+      xrandr --output Virtual-1 --auto
+    '')
+  ];
 }

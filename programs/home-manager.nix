@@ -87,7 +87,6 @@
     chezmoi
     neofetch
     gammastep
-    xclip
     zig
     slurp
     grim
