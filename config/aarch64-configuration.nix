@@ -37,12 +37,8 @@
 
   services.xserver = {
     enable = true;
-    # xkb.layout = "us";
-    # xkb.layout = "gb"; 
-    # xkb.model = "pc105"; 
-    # xkb.options = "caps:escape";
-    #
-    # dpi = 96;
+    layout = "gb";
+    variant = "";
 
     desktopManager = {
       xterm.enable = false;
