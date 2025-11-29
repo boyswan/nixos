@@ -1,5 +1,5 @@
 configuration {
-  dpi: 96;
+  dpi: 156;
   font: "Monaco for Powerline 12";
 }
 

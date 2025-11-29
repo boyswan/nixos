@@ -8,29 +8,36 @@ set $mod Mod4
 font pango:MesloLGL Nerd Font
 
 # Window visuals
-new_window pixel 2
-new_float pixel 2
+default_border pixel 1
+default_floating_border pixel 1
 floating_minimum_size 400 x 300
 floating_maximum_size -1 x -1
 focus_follows_mouse no
 
-# Reading colors from resources
-set_from_resource $back			i3wm.background #0a0a0a
-set_from_resource $black		i3wm.color0		#282A2E
-set_from_resource $grey			i3wm.color8		#373B41
-set_from_resource $lightgrey	i3wm.color7		#707880
-set_from_resource $white		i3wm.color15	#C5C8C6
-set_from_resource $yellow		i3wm.color11	#F0C674
-set_from_resource $red			i3wm.color9		#CC6666
-set_from_resource $darkred		i3wm.color1		#A54242
-set_from_resource $green		i3wm.color10	#B5BD56
+#----------------------------------------------------------------------
+# Color Definitions (from Xresources)
+#----------------------------------------------------------------------
+# Syntax: set_from_resource $variable  <resource_name>  <fallback_color>
+set_from_resource $bg      background  #171717
+set_from_resource $fg      foreground  #C5C8C6
+set_from_resource $dark    color0      #383838
+set_from_resource $accent  color4      #51A8B3
+set_from_resource $good    color2      #98c379
+set_from_resource $urgent  color1      #e06c75
+set_from_resource $grey    color8      #A7AAB0
 
-#class                  border      backgr.     text        split
-client.focused          $green     $green       $black      $red
-client.focused_inactive $grey       $grey       $lightgrey  $grey
-client.unfocused        $grey       $grey       $lightgrey  $grey
-client.urgent           $red        $red        $black      $red
-client.background       $back
+#----------------------------------------------------------------------
+# Window visuals
+#----------------------------------------------------------------------
+default_border pixel 1
+default_floating_border pixel 1
+
+# class                 border    backgr    text    indicator child_border
+client.focused          $dark     $dark     $accent $dark     $accent
+client.focused_inactive $dark     $dark     $grey   $dark     $grey
+client.unfocused        $dark     $dark     $grey   $dark     $dark
+client.urgent           $dark     $urgent   $dark   $urgent   $urgent
+client.background       $bg
 
 #----------------------------------------------------------------------
 # Startup
@@ -40,7 +47,9 @@ client.background       $back
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # No background
-exec --no-startup-id xsetroot -solid $back
+# exec --no-startup-id xsetroot -solid $black
+exec_always --no-startup-id xsetroot -solid "#0a0a0a"
+
 
 # Keyboard layout settings
 exec --no-startup-id setxkbmap -layout gb
@@ -222,6 +231,13 @@ bar {
 
     font pango:MesloLGL Nerd Font
     colors {
-        background $back
+        background $bg
+        separator  $grey
+        # Format:           <border>  <background> <text>
+        # focused_workspace  $dark  $dark  $accent
+        # active_workspace   $dark    $dark    $fg
+        # inactive_workspace $dark    $dark    $grey
+        # urgent_workspace   $urgent  $urgent  $bg
+        # binding_mode       $urgent  $urgent  $bg
     }
 }

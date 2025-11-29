@@ -1,6 +1,6 @@
 ! URXVT FONT SETTINGS
 !------------------------------------------------
-Xft.dpi: 192
+Xft.dpi: 156
 Xft.autohint: true
 Xft.antialias: true
 Xft.hinting: true
@@ -9,31 +9,40 @@ Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 ! TERMINAL COLORS
 !------------------------------------------------
+! COLORS
 *background: #171717
 *foreground: #C5C8C6
 *cursorColor: #C3FF00
-! black
+
+! BLACK (Dark Grey)
 *color0: #383838
 *color8: #A7AAB0
-! red
+
+! RED
 *color1: #e06c75
 *color9: #e06c75
-! green
+
+! GREEN
 *color2: #98c379
 *color10: #98c379
-! yellow
+
+! YELLOW
 *color3: #d19a66
 *color11: #d19a66
-! blue
+
+! BLUE / TEAL (Accent)
 *color4: #51A8B3
 *color12: #51A8B3
-! magenta
+
+! MAGENTA
 *color5: #85678F
 *color13: #B294BB
-! cyan
+
+! CYAN
 *color6: #5E8D87
 *color14: #8ABEB7
-! white
+
+! WHITE
 *color7: #A7AAB0
 *color15: #C5C8C6
 ! URXVT

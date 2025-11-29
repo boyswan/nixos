@@ -8,6 +8,12 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
+    pointerCursor = {
+      name = "Vanilla-DMZ";
+      package = pkgs.vanilla-dmz;
+      size = 128;
+      x11.enable = true;
+    };
   };
 
   gtk = {
@@ -22,9 +28,9 @@
 
   xdg.enable = true;
   xdg.configFile = {
-    "i3/config".text = builtins.readFile ./i3;
-    "i3status/config".text = builtins.readFile ./i3status;
-    "i3/i3dir".text = builtins.readFile ./i3dir;
+    "i3/config".text = builtins.readFile ./i3/config;
+    "i3status/config".text = builtins.readFile ./i3/status;
+    "i3/i3dir".text = builtins.readFile ./i3/dir;
   };
 
   xresources.extraConfig = builtins.readFile ./Xresources;
