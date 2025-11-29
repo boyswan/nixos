@@ -43,10 +43,17 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id xsetroot -solid $back
 
 # Keyboard layout settings
-exec --no-startup-id setxkbmap -layout us -variant intl
+exec --no-startup-id setxkbmap -layout gb
 
 # Input methods
 exec --no-startup-id fcitx5 -d
+
+# Start vmware user
+exec --no-startup-id vmware-user-suid-wrapper
+
+# Sync clipboards
+exec_always --no-startup-id autocutsel -selection PRIMARY -fork
+exec_always --no-startup-id autocutsel -selection CLIPBOARD -fork
 
 #----------------------------------------------------------------------
 # Keybindings
@@ -60,7 +67,8 @@ bindsym $mod+o exec rofi -show run
 # bindsym $mod+Return exec alacritty --gtk-single-instance=true
 # bindsym $mod+Return exec alacritty 
 # bindsym $mod+Return exec --no-startup-id alacritty --working-directory "$(xcwd)"
-bindsym $mod+Return exec --no-startup-id alacritty --working-directory "$(./i3dir)"
+bindsym $mod+Return exec --no-startup-id alacritty --working-directory "$(sh ~/.config/i3/i3dir)"
+# bindsym $mod+Return exec --no-startup-id alacritty 
 # bindsym $mod+n exec ghostty --gtk-single-instance=true
 # bindsym $mod+n exec ghostty 
 bindsym $mod+d split h

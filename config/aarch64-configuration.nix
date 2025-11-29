@@ -60,6 +60,7 @@
 
   system.stateVersion = "25.05";
 
+  nixpkgs.config.allowUnfree = true;
   environment.shells = with pkgs; [ bashInteractive zsh nushell ];
   environment.systemPackages = with pkgs; [
     cachix

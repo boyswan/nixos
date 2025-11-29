@@ -29,10 +29,6 @@
 
   xresources.extraConfig = builtins.readFile ./Xresources;
 
-  # programs.zsh = {
-  #   enable = true;
-  # };
-
   programs.git = {
     enable = true;
     userName = "boyswan";
@@ -44,33 +40,9 @@
     };
   };
 
-
-  # programs.neovim = {
-  #   enable = true;
-  #   vimAlias = true;
-  #   defaultEditor = true;
-  # };
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-  };
-
-  programs.i3status = {
-    enable = true;
-
-    # general = {
-    #   colors = true;
-    #   color_good = "#8C9440";
-    #   color_bad = "#A54242";
-    #   color_degraded = "#DE935F";
-    # };
-    #
-    modules = {
-      ipv6.enable = false;
-      "wireless _first_".enable = false;
-      "battery all".enable = false;
-    };
   };
 
   home.stateVersion = "23.05";
@@ -88,13 +60,17 @@
     rofi
     fzf
     chezmoi
+    xsel
+    autocutsel
     xcwd
     neofetch
     gammastep
     zig
     slurp
     grim
+    i3status
     gh
+    tree
     gitui
     bat
     xdotool
@@ -102,6 +78,8 @@
     brave
     nil
     fd
+    xorg.xsetroot
     docker
+    claude-code
   ];
 }
