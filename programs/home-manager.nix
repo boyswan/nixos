@@ -24,7 +24,7 @@
   xdg.configFile = {
     "i3/config".text = builtins.readFile ./i3;
     "i3status/config".text = builtins.readFile ./i3status;
-    "i3/dir".text = builtins.readFile ./i3dir;
+    "i3/i3dir".text = builtins.readFile ./i3dir;
   };
 
   xresources.extraConfig = builtins.readFile ./Xresources;

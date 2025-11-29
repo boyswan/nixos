@@ -60,7 +60,7 @@ bindsym $mod+o exec rofi -show run
 # bindsym $mod+Return exec alacritty --gtk-single-instance=true
 # bindsym $mod+Return exec alacritty 
 # bindsym $mod+Return exec --no-startup-id alacritty --working-directory "$(xcwd)"
-bindsym $mod+Return exec --no-startup-id alacritty --working-directory "$(./dir)"
+bindsym $mod+Return exec --no-startup-id alacritty --working-directory "$(./i3dir)"
 # bindsym $mod+n exec ghostty --gtk-single-instance=true
 # bindsym $mod+n exec ghostty 
 bindsym $mod+d split h
