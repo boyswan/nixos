@@ -58,7 +58,8 @@ bindsym $mod+o exec rofi -show run
 
 # start a terminal
 # bindsym $mod+Return exec alacritty --gtk-single-instance=true
-bindsym $mod+Return exec alacritty 
+# bindsym $mod+Return exec alacritty 
+bindsym $mod+Return exec --no-startup-id alacritty --working-directory "$(xcwd)"
 # bindsym $mod+n exec ghostty --gtk-single-instance=true
 # bindsym $mod+n exec ghostty 
 bindsym $mod+d split h

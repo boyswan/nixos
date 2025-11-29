@@ -65,11 +65,11 @@
     #   color_degraded = "#DE935F";
     # };
     #
-    # modules = {
-    #   ipv6.enable = false;
-    #   "wireless _first_".enable = false;
-    #   "battery all".enable = false;
-    # };
+    modules = {
+      ipv6.enable = false;
+      "wireless _first_".enable = false;
+      "battery all".enable = false;
+    };
   };
 
   home.stateVersion = "23.05";
@@ -81,12 +81,13 @@
     alacritty
     ghostty
     neovim
-    # starship
+    starship
     firefox
     ripgrep
     rofi
     fzf
     chezmoi
+    xcwd
     neofetch
     gammastep
     zig
@@ -100,6 +101,5 @@
     nil
     fd
     docker
-    fira-code
   ];
 }

@@ -27,7 +27,7 @@
 
   programs.zsh.enable = true;
 
-  console.useXkbConfig = true;
+  # console.useXkbConfig = true;
 
   xdg.portal = {
     enable = true;
@@ -37,10 +37,10 @@
 
   services.xserver = {
     enable = true;
-    xkb.layout = "us";
+    # xkb.layout = "us";
     # xkb.layout = "gb"; 
     # xkb.model = "pc105"; 
-    xkb.options = "caps:escape";
+    # xkb.options = "caps:escape";
     #
     # dpi = 96;
 
