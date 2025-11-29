@@ -27,7 +27,7 @@
 
   programs.zsh.enable = true;
 
-  # console.useXkbConfig = true;
+ console.keyMap = "uk";
 
   xdg.portal = {
     enable = true;
@@ -37,7 +37,7 @@
 
   services.xserver = {
     enable = true;
-    layout = "gb";
+    xkb.layout = "gb";
 
     desktopManager = {
       xterm.enable = false;
