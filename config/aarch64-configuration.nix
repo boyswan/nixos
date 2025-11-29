@@ -38,7 +38,6 @@
   services.xserver = {
     enable = true;
     layout = "gb";
-    variant = "";
 
     desktopManager = {
       xterm.enable = false;
