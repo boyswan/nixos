@@ -31,6 +31,7 @@
     "i3/config".text = builtins.readFile ./i3/config;
     "i3status/config".text = builtins.readFile ./i3/status;
     "i3/i3dir".text = builtins.readFile ./i3/dir;
+    "rofi/config.rasi".text = builtins.readFile ./rofi;
   };
 
   xresources.extraConfig = builtins.readFile ./Xresources;
@@ -87,5 +88,7 @@
     xorg.xsetroot
     docker
     claude-code
+    k9s
+    k3d
   ];
 }
