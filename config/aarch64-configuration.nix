@@ -16,7 +16,7 @@
 
   users.users.jack = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = ["docker" "wheel" ];
     initialPassword = "jack";
     shell = pkgs.nushell;
   };
@@ -24,10 +24,22 @@
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = true;
   services.openssh.settings.PermitRootLogin = "yes";
+  
+  # sudo -u gitea gitea --config /var/lib/gitea/custom/conf/app.ini admin user create --username admin --password admin --email admin@localhost --admin
+  services.gitea = {
+    enable = true;
+    settings = {
+      server = {
+        DOMAIN = "localhost";
+        HTTP_PORT = 3000;
+        ROOT_URL = "http://localhost:3000/";
+      };
+    };
+  };
 
   programs.zsh.enable = true;
 
- console.keyMap = "uk";
+  console.keyMap = "uk";
 
   xdg.portal = {
     enable = true;
@@ -56,6 +68,7 @@
 
   services.displayManager.defaultSession = "none+i3";
   virtualisation.vmware.guest.enable = true;
+  virtualisation.docker.enable = true;
 
 
   system.stateVersion = "25.05";

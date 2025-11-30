@@ -80,3 +80,36 @@ vm-rebuild:
 		--exclude='.git/' \
 		./ {{NIXUSER}}@{{NIXADDR}}:/nix-config
 	ssh {{SSH_OPTIONS}} -p{{NIXPORT}} {{NIXUSER}}@{{NIXADDR}} "sudo nixos-rebuild switch --flake /nix-config/#{{NIXNAME}}"
+
+vm-resize:
+    ssh {{SSH_OPTIONS}} -p{{NIXPORT}} root@{{NIXADDR}} " \
+        set -e; \
+        echo '--- Rescanning disk to detect new size ---'; \
+        echo 1 > /sys/class/block/nvme0n1/device/rescan || true; \
+        \
+        echo '--- Capturing current Swap UUID ---'; \
+        SWAP_UUID=\$(lsblk -no UUID /dev/nvme0n1p2); \
+        if [ -z \"\$SWAP_UUID\" ]; then echo 'FAILED: Could not read Swap UUID'; exit 1; fi; \
+        echo \"Found UUID: \$SWAP_UUID\"; \
+        \
+        echo '--- Disabling Swap ---'; \
+        swapoff /dev/nvme0n1p2; \
+        \
+        echo '--- Modifying Partitions ---'; \
+        parted -s /dev/nvme0n1 rm 2; \
+        parted -s /dev/nvme0n1 resizepart 1 -8GB; \
+        parted -s /dev/nvme0n1 mkpart primary linux-swap -8GB 100\%; \
+        \
+        echo '--- Waiting for kernel sync ---'; \
+        sleep 2; \
+        \
+        echo '--- Resizing Filesystem ---'; \
+        resize2fs /dev/nvme0n1p1; \
+        \
+        echo '--- Restoring Swap (Keeping same UUID) ---'; \
+        mkswap -U \$SWAP_UUID /dev/nvme0n1p2; \
+        swapon /dev/nvme0n1p2; \
+        \
+        echo '--- DONE ---'; \
+        df -h /; \
+    "

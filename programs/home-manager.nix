@@ -60,6 +60,7 @@
     htop
     alacritty
     ghostty
+    parted
     neovim
     starship
     firefox
@@ -89,6 +90,8 @@
     docker
     claude-code
     k9s
-    k3d
+    just
+    nil
+    gitea
   ];
 }
