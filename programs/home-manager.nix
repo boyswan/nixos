@@ -60,7 +60,6 @@
     htop
     alacritty
     ghostty
-    parted
     neovim
     starship
     firefox
