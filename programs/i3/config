@@ -33,9 +33,9 @@ default_border pixel 1
 default_floating_border pixel 1
 
 # class                 border    backgr    text    indicator child_border
-client.focused          $dark     $dark     $accent $dark     $accent
-client.focused_inactive $dark     $dark     $grey   $dark     $grey
-client.unfocused        $dark     $dark     $grey   $dark     $dark
+client.focused          $dark     $dark     $fg     $dark     $accent
+client.focused_inactive $dark     $bg       $grey   $dark     $grey
+client.unfocused        $dark     $bg       $grey   $dark     $dark
 client.urgent           $dark     $urgent   $dark   $urgent   $urgent
 client.background       $bg
 
@@ -85,7 +85,15 @@ bindsym $mod+Shift+d split v
 
 
 # kill focused window
-bindsym $mod+w kill
+bindsym $mod+q kill
+
+# mac bindings
+bindsym --release $mod+c exec --no-startup-id xdotool key --clearmodifiers Ctrl+Insert
+bindsym --release $mod+a exec --no-startup-id xdotool key --clearmodifiers Ctrl+a
+bindsym --release $mod+w exec --no-startup-id xdotool key --clearmodifiers Ctrl+w
+bindsym --release $mod+t exec --no-startup-id xdotool key --clearmodifiers Ctrl+t
+bindsym --release $mod+x exec --no-startup-id xdotool key --clearmodifiers Shift+Delete
+bindsym --release $mod+v exec --no-startup-id xdotool key --clearmodifiers Shift+Insert
 
 # change focus
 bindsym $mod+h focus left

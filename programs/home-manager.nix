@@ -41,9 +41,7 @@
     userName = "boyswan";
     userEmail = "boyswan@vm";
     extraConfig = {
-      credential = {
-        helper = "${pkgs.gh}/bin/gh auth git-credential";
-      };
+      credential.helper = "store";
     };
   };
 
