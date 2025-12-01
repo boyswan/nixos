@@ -88,10 +88,10 @@ bindsym $mod+Shift+d split v
 bindsym $mod+q kill
 
 # mac bindings
+bindsym $mod+a exec --no-startup-id xdotool key --clearmodifiers Ctrl+a
+bindsym $mod+w exec --no-startup-id xdotool key --clearmodifiers Ctrl+w
+bindsym $mod+t exec --no-startup-id xdotool key --clearmodifiers Ctrl+t
 bindsym --release $mod+c exec --no-startup-id xdotool key --clearmodifiers Ctrl+Insert
-bindsym --release $mod+a exec --no-startup-id xdotool key --clearmodifiers Ctrl+a
-bindsym --release $mod+w exec --no-startup-id xdotool key --clearmodifiers Ctrl+w
-bindsym --release $mod+t exec --no-startup-id xdotool key --clearmodifiers Ctrl+t
 bindsym --release $mod+x exec --no-startup-id xdotool key --clearmodifiers Shift+Delete
 bindsym --release $mod+v exec --no-startup-id xdotool key --clearmodifiers Shift+Insert
 
