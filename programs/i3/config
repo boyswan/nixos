@@ -25,6 +25,7 @@ set_from_resource $accent  color4      #51A8B3
 set_from_resource $good    color2      #98c379
 set_from_resource $urgent  color1      #e06c75
 set_from_resource $grey    color8      #A7AAB0
+set_from_resource $nudge   color5      #85678F
 
 #----------------------------------------------------------------------
 # Window visuals
@@ -33,10 +34,10 @@ default_border pixel 1
 default_floating_border pixel 1
 
 # class                 border    backgr    text    indicator child_border
-client.focused          $dark     $dark     $fg     $dark     $accent
-client.focused_inactive $dark     $bg       $grey   $dark     $grey
-client.unfocused        $dark     $bg       $grey   $dark     $dark
-client.urgent           $dark     $urgent   $dark   $urgent   $urgent
+client.focused          $dark     $bg       $accent  $nudge    $accent
+client.focused_inactive $dark     $bg       $accent  $dark     $grey
+client.unfocused        $dark     $bg       $grey    $dark     $dark
+client.urgent           $dark     $urgent   $dark    $urgent   $urgent
 client.background       $bg
 
 #----------------------------------------------------------------------
@@ -85,21 +86,25 @@ bindsym $mod+Shift+d split v
 
 
 # kill focused window
-bindsym $mod+q kill
+bindsym $mod+w kill
 
-# mac bindings
-bindsym --release $mod+a exec --no-startup-id xdotool key --clearmodifiers Ctrl+a
-bindsym --release $mod+w exec --no-startup-id xdotool key --clearmodifiers Ctrl+w
-bindsym --release $mod+t exec --no-startup-id xdotool key --clearmodifiers Ctrl+t
-bindsym --release $mod+c exec --no-startup-id xdotool key --clearmodifiers Ctrl+Insert
-bindsym --release $mod+x exec --no-startup-id xdotool key --clearmodifiers Shift+Delete
-bindsym --release $mod+v exec --no-startup-id xdotool key --clearmodifiers Shift+Insert
+
+# # mac bindings
+# bindsym --release $mod+a exec --no-startup-id xdotool key --clearmodifiers Ctrl+a
+# bindsym --release $mod+w exec --no-startup-id xdotool key --clearmodifiers Ctrl+w
+# bindsym --release $mod+t exec --no-startup-id xdotool key --clearmodifiers Ctrl+t
+# bindsym --release $mod+Backspace exec --no-startup-id xdotool key --clearmodifiers Ctrl+Backspace
+# bindsym --release $mod+c exec --no-startup-id xdotool key --clearmodifiers Ctrl+Insert
+# bindsym --release $mod+x exec --no-startup-id xdotool key --clearmodifiers Shift+Delete
+# bindsym --release $mod+v exec --no-startup-id xdotool key --clearmodifiers Shift+Insert
 
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
+bindsym $mod+c focus child
+bindsym $mod+a focus parent
 
 # move focused window
 bindsym $mod+Shift+h move left

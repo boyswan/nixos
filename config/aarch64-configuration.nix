@@ -5,6 +5,7 @@
   nix.extraOptions = "experimental-features = nix-command flakes";
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "vm";
@@ -24,6 +25,7 @@
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = true;
   services.openssh.settings.PermitRootLogin = "yes";
+
   
   # sudo -u gitea gitea --config /var/lib/gitea/custom/conf/app.ini admin user create --username admin --password admin --email admin@localhost --admin
   services.gitea = {
@@ -65,7 +67,7 @@
     # ${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1200
     windowManager.i3.enable = true;
   };
-
+ 
   services.displayManager.defaultSession = "none+i3";
   virtualisation.vmware.guest.enable = true;
   virtualisation.docker.enable = true;
