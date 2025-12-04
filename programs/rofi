@@ -1,5 +1,5 @@
 configuration {
-  dpi: 196;
+  dpi: 192;
   font: "MesloLGL Nerd Font 12";
   show-icons: true;
 }

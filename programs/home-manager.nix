@@ -8,12 +8,32 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
-    pointerCursor = {
-      name = "Vanilla-DMZ";
-      package = pkgs.vanilla-dmz;
-      size = 128;
-      x11.enable = true;
-    };
+  };
+  home.pointerCursor = {
+    name = "Vanilla-DMZ";
+    package = pkgs.vanilla-dmz;
+    size = 64;  # 24 is the standard default. (Previous was likely 32 or 64)
+    x11.enable = true; 
+    gtk.enable = true;
+  };
+  
+  # home.sessionVariables = {
+  # };
+
+  home.sessionVariables = {
+    XCURSOR_SIZE = "64";
+    GDK_SCALE = "2";
+    GDK_DPI_SCALE = "0.5";
+  };
+
+  xresources.properties = {
+    "Xft.dpi" = 192; 
+    "Xft.autohint" = true;
+    "Xft.antialias" = true;
+    "Xft.hinting" = true;
+    "Xft.hintstyle" = "hintslight";
+    "Xft.rgba" = "rgb";
+    "Xft.lcdfilter" = "lcddefault";
   };
 
   gtk = {
@@ -33,8 +53,6 @@
     "i3/i3dir".text = builtins.readFile ./i3/dir;
     "rofi/config.rasi".text = builtins.readFile ./rofi;
   };
-
-  xresources.extraConfig = builtins.readFile ./Xresources;
 
   programs.git = {
     enable = true;

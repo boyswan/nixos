@@ -51,20 +51,42 @@
 
   services.xserver = {
     enable = true;
+    videoDrivers = [ "modesetting" ]; 
     xkb.layout = "gb";
 
     desktopManager = {
       xterm.enable = false;
     };
+    deviceSection = ''
+      Option "SWCursor" "on"
+    '';
 
     displayManager = {
-      lightdm.enable = true;
-      sessionCommands = ''
-        ${pkgs.xorg.xset}/bin/xset r rate 200 40
-      '';
+      lightdm = {
+          enable = true;
+          
+          # "greeters" MUST be inside "lightdm"
+          greeters.gtk = {
+            enable = true;
+            
+            # Fix cursor size for login screen
+            cursorTheme = {
+              name = "Vanilla-DMZ";
+              package = pkgs.vanilla-dmz;
+              size = 64; 
+            };
+
+            # Fix DPI for login screen text
+            extraConfig = ''
+              xft-dpi=192
+            '';
+          };
+        };
+      # sessionCommands = ''
+      #   ${pkgs.xorg.xset}/bin/xset r rate 200 40
+      # '';
     };
 
-    # ${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1200
     windowManager.i3.enable = true;
   };
  
