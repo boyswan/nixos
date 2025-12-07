@@ -12,13 +12,10 @@
   home.pointerCursor = {
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    size = 64;  # 24 is the standard default. (Previous was likely 32 or 64)
+    size = 64;  
     x11.enable = true; 
     gtk.enable = true;
   };
-  
-  # home.sessionVariables = {
-  # };
 
   home.sessionVariables = {
     XCURSOR_SIZE = "64";
@@ -82,8 +79,6 @@
     alacritty
     ghostty
     neovim
-    starship
-    firefox
     ripgrep
     rofi
     fzf
@@ -91,15 +86,10 @@
     xsel
     autocutsel
     xcwd
-    neofetch
-    gammastep
-    zig
-    slurp
     grim
     i3status
     gh
     tree
-    gitui
     bat
     xdotool
     jq
@@ -111,6 +101,7 @@
     claude-code
     k9s
     just
+    jujutsu
     nil
     gitea
   ];

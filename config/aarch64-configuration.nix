@@ -63,28 +63,28 @@
 
     displayManager = {
       lightdm = {
+        enable = true;
+        
+        # "greeters" MUST be inside "lightdm"
+        greeters.gtk = {
           enable = true;
           
-          # "greeters" MUST be inside "lightdm"
-          greeters.gtk = {
-            enable = true;
-            
-            # Fix cursor size for login screen
-            cursorTheme = {
-              name = "Vanilla-DMZ";
-              package = pkgs.vanilla-dmz;
-              size = 64; 
-            };
-
-            # Fix DPI for login screen text
-            extraConfig = ''
-              xft-dpi=192
-            '';
+          # Fix cursor size for login screen
+          cursorTheme = {
+            name = "Vanilla-DMZ";
+            package = pkgs.vanilla-dmz;
+            size = 64; 
           };
+
+          # Fix DPI for login screen text
+          extraConfig = ''
+            xft-dpi=192
+          '';
         };
-      # sessionCommands = ''
-      #   ${pkgs.xorg.xset}/bin/xset r rate 200 40
-      # '';
+      };
+      sessionCommands = ''
+        ${pkgs.xorg.xset}/bin/xset r rate 200 40
+      '';
     };
 
     windowManager.i3.enable = true;
