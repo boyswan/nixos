@@ -53,8 +53,9 @@
 
   programs.git = {
     enable = true;
-    userName = "boyswan";
-    userEmail = "boyswan@vm";
+    includes = [
+      { path = "~/.gitconfig.local"; }
+    ];
     extraConfig = {
       credential.helper = "store";
     };

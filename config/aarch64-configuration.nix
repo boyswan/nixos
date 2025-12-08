@@ -33,8 +33,8 @@
     settings = {
       server = {
         DOMAIN = "localhost";
-        HTTP_PORT = 3000;
-        ROOT_URL = "http://localhost:3000/";
+        HTTP_PORT = 4000;
+        ROOT_URL = "http://localhost:4000/";
       };
     };
   };
