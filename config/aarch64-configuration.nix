@@ -11,6 +11,7 @@
   networking.hostName = "vm";
   networking.useDHCP = true; #
   networking.firewall.enable = false;
+  networking.firewall.trustedInterfaces = [ "enp2s0" ];
   networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
   time.timeZone = "Europe/London";
@@ -26,6 +27,9 @@
   services.openssh.settings.PasswordAuthentication = true;
   services.openssh.settings.PermitRootLogin = "yes";
 
+  services.tailscale = {
+    enable = true;
+  };
   
   # sudo -u gitea gitea --config /var/lib/gitea/custom/conf/app.ini admin user create --username admin --password admin --email admin@localhost --admin
   services.gitea = {

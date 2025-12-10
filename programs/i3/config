@@ -51,6 +51,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # exec --no-startup-id xsetroot -solid $black
 exec_always --no-startup-id xsetroot -solid "#0a0a0a"
 exec_always --no-startup-id xrandr --output Virtual-1 --auto
+exec_always --no-startup-id xset r rate 200 40
 
 # bindsym $mod+Shift+r exec --no-startup-id xrandr --output Virtual-1 --auto
 

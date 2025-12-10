@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ inputs, config, pkgs, ... }: {
 
   home = {
     username = "jack";
@@ -70,6 +70,7 @@
       };
     };
   };
+  
 
   home.stateVersion = "23.05";
 
@@ -78,7 +79,7 @@
     dconf
     htop
     alacritty
-    ghostty
+    # ghostty
     neovim
     ripgrep
     rofi
@@ -104,6 +105,8 @@
     just
     jujutsu
     nil
-    gitea
+    # gitea
+    # opencode
+    # inputs.opencode-flake.packages.${pkgs.system}.default
   ];
 }
